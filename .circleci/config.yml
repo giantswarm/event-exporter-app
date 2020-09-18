@@ -9,11 +9,10 @@ workflows:
     jobs:
       - architect/push-to-app-catalog:
           name: push-to-default-app-catalog
-          context:
-            - architect
           app_catalog: "default-catalog"
           app_catalog_test: "default-test-catalog"
           chart: "event-exporter-app"
+          context: architect
           filters:
             # Trigger the job also on git tag.
             tags:
