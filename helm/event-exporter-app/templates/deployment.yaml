@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: event-exporter-app
+  namespace: giantswarm
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: event-exporter-app
+        version: v1
+    spec:
+      serviceAccountName: event-exporter-app
+      containers:
+        - name: event-exporter-app
+          image: "{{ .Values.image.registry }}/{{ .Values.image.name }}:{{ .Values.image.tag }}"
+          imagePullPolicy: "{{ .Values.image.pullPolicy }}"
+          args:
+            - -conf=/data/config.yaml
+          volumeMounts:
+            - mountPath: /data
+              name: cfg
+      volumes:
+        - name: cfg
+          configMap:
+            name: event-exporter-app
+  selector:
+    matchLabels:
+      app: event-exporter-app
+      version: v1
