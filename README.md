@@ -1,10 +1,8 @@
-[![CircleCI](https://circleci.com/gh/giantswarm/{APP-NAME}-app.svg?style=shield)](https://circleci.com/gh/giantswarm/{APP-NAME}-app)
+[![CircleCI](https://circleci.com/gh/giantswarm/event-exporter-app.svg?style=shield)](https://circleci.com/gh/giantswarm/event-exporter-app)
 
-# {APP-NAME}-app chart
+# event-exporter-app
 
-Giant Swarm offers a {APP-NAME} Managed App which can be installed in tenant clusters.
-Here we define the {APP-NAME} chart with its templates and default configuration.
-
-## Credit
-
-* {APP HELM REPOSITORY}
+The event-exporter-app runs on Control Planes to watch and act upon Kubernetes
+events. One use case might be to look for Tenant Cluster upgrade events and emit
+Slack messages in various channels for awareness. The core component can be
+found at https://github.com/opsgenie/kubernetes-event-exporter.
