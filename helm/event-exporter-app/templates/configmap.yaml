@@ -18,4 +18,4 @@ data:
         webhook:
           endpoint: "{{ .Values.webhook.endpoint }}"
           layout:
-            text: "Tenant Cluster {{ .InvolvedObject.Name }} on [[ .Installation.Name ]] upgrade got triggered."
+            text: "Tenant Cluster {{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.installation.Name }} upgrade got triggered."
