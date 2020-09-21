@@ -1,0 +1,13 @@
+name: event-exporter-app
+
+image:
+  name: giantswarm/event-exporter-app
+  pullPolicy: IfNotPresent
+  registry: quay.io
+  tag: v0.9
+
+installation:
+  name: "todo-installation-name"
+
+webhook:
+  endpoint: "todo-webhook-endpoint"

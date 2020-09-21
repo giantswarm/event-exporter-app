@@ -1,0 +1,7 @@
+apiVersion: v1
+name: event-exporter-app
+namespace: giantswarm
+version: [[ .Version ]]
+appVersion: v0.9
+description: The event-exporter-app runs on Control Planes to watch and act upon Kubernetes events.
+home: https://github.com/opsgenie/kubernetes-event-exporter
