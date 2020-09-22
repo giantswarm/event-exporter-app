@@ -19,7 +19,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: view
+  name: event-exporter-app
 subjects:
   - kind: ServiceAccount
     name: event-exporter-app
