@@ -9,7 +9,7 @@ image:
   name: giantswarm/kubernetes-event-exporter
   pullPolicy: IfNotPresent
   registry: quay.io
-  tag: v0.9
+  tag: "0.9"
 
 installation:
   name: "todo-installation-name"
