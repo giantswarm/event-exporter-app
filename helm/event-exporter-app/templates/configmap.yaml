@@ -9,6 +9,8 @@ data:
     route:
       routes:
         - match:
+          - receiver: dump
+        - match:
           apiVersion: "clusters.x-k8s.io/v1alpha2"
           kind: "Cluster"
           reason: "ClusterIsUpdating"
