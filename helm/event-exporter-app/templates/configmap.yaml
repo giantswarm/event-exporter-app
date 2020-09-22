@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: event-exporter-cfg
+  name: event-exporter-app
   namespace: giantswarm
 data:
   config.yaml: |
