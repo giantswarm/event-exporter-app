@@ -9,10 +9,10 @@ data:
     route:
       routes:
         - match:
-          apiVersion: "cluster.x-k8s.io/v1alpha2"
-          kind: "Cluster"
-          reason: "ClusterIsUpdating"
-          receiver: "webhook"
+          - apiVersion: "cluster.x-k8s.io/v1alpha2"
+          - kind: "Cluster"
+          - reason: "ClusterIsUpdating"
+          - receiver: "webhook"
     receivers:
       - name: "webhook"
         webhook:
