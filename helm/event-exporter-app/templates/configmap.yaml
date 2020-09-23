@@ -8,11 +8,20 @@ data:
     logLevel: debug
     route:
       routes:
+        # We want to send Tenant Cluster upgrade events to Slack via the webhook
+        # receiver. Therefore we match for events attached to the CAPI Cluster
+        # CRs.
         - match:
           - apiversion: "cluster.x-k8s.io/v1alpha2"
             kind: "Cluster"
             reason: "ClusterIsUpdating"
             receiver: "webhook"
+
+        # We want to ignore all other events once we handled the events we are
+        # actually interested in. Therefore the drop rule has to be evaluated at
+        # the end of the tree.
+        - drop:
+          - namespace: "*"
     receivers:
       - name: "webhook"
         webhook:
