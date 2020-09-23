@@ -1,5 +1,3 @@
-name: event-exporter-app
-
 image:
   # The image name is different from the repo because we use some upstream
   # project under the hood.
@@ -10,9 +8,3 @@ image:
   pullPolicy: IfNotPresent
   registry: quay.io
   tag: "0.9"
-
-installation:
-  name: "todo-installation-name"
-
-webhook:
-  endpoint: "todo-webhook-endpoint"

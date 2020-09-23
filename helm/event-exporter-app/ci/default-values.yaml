@@ -2,3 +2,8 @@
 Installation:
   V1:
     Name: ""
+
+    Secret:
+      EventExporterApp:
+        Slack:
+          Webhook: ""
