@@ -15,6 +15,16 @@ rules:
     - ""
     resources:
     - events
+    - pods
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - apps
+    resources:
+    - replicasets
+    - deployments
     verbs:
     - get
     - list

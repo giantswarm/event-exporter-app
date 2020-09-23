@@ -8,13 +8,10 @@ data:
     logLevel: debug
     route:
       routes:
-        - match:
-          - receiver: dump
-        - match:
-          apiVersion: "clusters.x-k8s.io/v1alpha2"
-          kind: "Cluster"
-          reason: "ClusterIsUpdating"
-          receiver: "webhook"
+          - apiversion: "cluster.x-k8s.io/v1alpha2"
+            kind: "Cluster"
+            reason: "ClusterIsUpdating"
+            receiver: "webhook"
     receivers:
       - name: "webhook"
         webhook:
