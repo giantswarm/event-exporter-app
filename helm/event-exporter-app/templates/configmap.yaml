@@ -8,6 +8,7 @@ data:
     logLevel: debug
     route:
       routes:
+        - match:
           - apiversion: "cluster.x-k8s.io/v1alpha2"
             kind: "Cluster"
             reason: "ClusterIsUpdating"
