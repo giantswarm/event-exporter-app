@@ -1,10 +1,15 @@
 name: event-exporter-app
 
 image:
-  name: giantswarm/event-exporter-app
+  # The image name is different from the repo because we use some upstream
+  # project under the hood.
+  #
+  #     https://github.com/opsgenie/kubernetes-event-exporter
+  #
+  name: giantswarm/kubernetes-event-exporter
   pullPolicy: IfNotPresent
   registry: quay.io
-  tag: v0.9
+  tag: "0.9"
 
 installation:
   name: "todo-installation-name"
