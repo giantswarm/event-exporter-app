@@ -7,4 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/giantswarm/event-exporter-app/tree/master
+## [0.1.0] - 2020-09-23
+
+[Unreleased]: https://github.com/giantswarm/event-exporter-app/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/giantswarm/event-exporter-app/releases/tag/v0.1.0
