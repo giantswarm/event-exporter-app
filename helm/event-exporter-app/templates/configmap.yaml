@@ -6,8 +6,17 @@ metadata:
 data:
   config.yaml: |
     logLevel: debug
+
+    {{ if .Values.Installation.V1.Secret.EventExporterApp }}
+    # We do not have webhooks configured on all Control Planes since they are
+    # part of an optional feature, which is sending Kubernetes Events to Slack.
+    # In case the webhook is not present Helm cannot template the configmap
+    # properly. Therefore we do not configure any matchers nor receivers if
+    # there is no webhook configured for a given Control Plane.
+
     route:
       routes:
+
         # We want to send Tenant Cluster upgrade events to Slack via the webhook
         # receiver. Therefore we match for events attached to the CAPI Cluster
         # CRs.
@@ -22,9 +31,13 @@ data:
         # the end of the tree.
         - drop:
           - namespace: "*"
+
     receivers:
+
       - name: "webhook"
         webhook:
           endpoint: "{{ .Values.Installation.V1.Secret.EventExporterApp.Slack.Webhook }}"
           layout:
             text: "Tenant Cluster upgrade got triggered for {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.Installation.V1.Name }}."
+
+    {{ end }}
