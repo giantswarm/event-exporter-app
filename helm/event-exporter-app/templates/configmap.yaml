@@ -39,7 +39,7 @@ data:
           endpoint: "{{ .Values.Installation.V1.Secret.EventExporterApp.Slack.Webhook }}"
           layout:
             text: "Tenant Cluster upgrade got triggered for {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.Installation.V1.Name }}."
- 
+
       - name: "grafana"
         webhook:
           endpoint: "https://giantswarm.grafana.net/api/annotations/graphite"
