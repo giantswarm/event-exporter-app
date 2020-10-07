@@ -2,8 +2,11 @@
 Installation:
   V1:
     Name: ""
+    Customer: ""
 
     Secret:
       EventExporterApp:
         Slack:
           Webhook: ""
+        Grafana:
+          Token: ""
