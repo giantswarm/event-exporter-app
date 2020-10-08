@@ -16,32 +16,15 @@ data:
 
     route:
       routes:
-        # We post kubernetes events to grafana. TODO: refine
+        # We post kubernetes events to grafana.
         - match:
           - receiver: "grafana"
-        
-        # We want to send Tenant Cluster upgrade events to Slack via the webhook
-        # receiver. Therefore we match for events attached to the CAPI Cluster
-        # CRs.
-        - match:
-          - apiversion: "cluster.x-k8s.io/v1alpha2"
-            kind: "Cluster"
-            reason: "ClusterIsUpdating"
-            receiver: "webhook"
-
         # We want to ignore all other events once we handled the events we are
         # actually interested in. Therefore the drop rule has to be evaluated at
         # the end of the tree.
         - drop:
           - namespace: "*"
-
     receivers:
-      - name: "webhook"
-        webhook:
-          endpoint: "{{ .Values.Installation.V1.Secret.EventExporterApp.Slack.Webhook }}"
-          layout:
-            text: "Tenant Cluster upgrade got triggered for {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.Installation.V1.Name }}."
-
       - name: "grafana"
         webhook:
           endpoint: "https://giantswarm.grafana.net/api/annotations/graphite"
