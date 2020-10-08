@@ -20,7 +20,7 @@ data:
         # We post kubernetes events to grafana. TODO: refine
         - match:
           - receiver: "grafana"
-        { end }}
+        {{ end }}
         
         {{ if .Values.Installation.V1.Secret.EventExporterApp.Grafana }}
         # We want to send Tenant Cluster upgrade events to Slack via the webhook
@@ -31,7 +31,7 @@ data:
             kind: "Cluster"
             reason: "ClusterIsUpdating"
             receiver: "webhook"
-        { end }}
+        {{ end }}
 
         # We want to ignore all other events once we handled the events we are
         # actually interested in. Therefore the drop rule has to be evaluated at
@@ -46,7 +46,7 @@ data:
           endpoint: "{{ .Values.Installation.V1.Secret.EventExporterApp.Slack.Webhook }}"
           layout:
             text: "Tenant Cluster upgrade got triggered for {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.Installation.V1.Name }}."
-      { end }}
+      {{ end }}
 
       {{ if .Values.Installation.V1.Secret.EventExporterApp.Grafana }}
       - name: "grafana"
@@ -61,6 +61,5 @@ data:
             tags: ["{{ .Reason }}","{{ .Type }}","{{ "{{" }} .InvolvedObject.Kind {{ "}}" }}","{{ "{{" }} .InvolvedObject.Name {{ "}}" }}","{{ .Values.Installation.V1.Name }}","{{ .Values.Installation.V1.Customer }}","{{ "{{" }} .Source.Component {{ "}}" }}"]
             when: "{{ .GetTimestampMs }}"
             data: "{{ .Message }} for {{ "{{" }} .InvolvedObject.Kind {{ "}}" }} {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.Installation.V1.Name }} reported by {{ "{{" }} .Source.Component {{ "}}" }} at {{ .GetTimestampMs }}"
-      { end }}
-
+      {{ end }}
     {{ end }}
