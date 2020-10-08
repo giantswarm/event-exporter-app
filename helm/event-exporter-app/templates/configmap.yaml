@@ -16,13 +16,13 @@ data:
 
     route:
       routes:
-        {{ if .Values.Installation.V1.Secret.EventExporterApp.Slack }}
+        {{ if .Values.Installation.V1.Secret.EventExporterApp.Grafana}}
         # We post kubernetes events to grafana. TODO: refine
         - match:
           - receiver: "grafana"
         {{ end }}
         
-        {{ if .Values.Installation.V1.Secret.EventExporterApp.Grafana }}
+        {{ if .Values.Installation.V1.Secret.EventExporterApp.Slack }}
         # We want to send Tenant Cluster upgrade events to Slack via the webhook
         # receiver. Therefore we match for events attached to the CAPI Cluster
         # CRs.
