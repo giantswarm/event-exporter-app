@@ -20,7 +20,7 @@ data:
         # We post kubernetes events to grafana.
         - match:
           - receiver: "grafana"
-        {{ if .Values.Installation.V1.Secret.EventExporterApp.Slack }}
+        {{- if .Values.Installation.V1.Secret.EventExporterApp.Slack }}
         # We want to send Tenant Cluster upgrade events to Slack via the webhook
         # receiver. Therefore we match for events attached to the CAPI Cluster
         # CRs.
@@ -29,7 +29,7 @@ data:
             kind: "Cluster"
             reason: "ClusterIsUpdating"
             receiver: "webhook"
-        {{ end }}
+        {{- end }}
 
         # We want to ignore all other events once we handled the events we are
         # actually interested in. Therefore the drop rule has to be evaluated at
@@ -39,13 +39,13 @@ data:
 
     receivers:
 
-      {{ if .Values.Installation.V1.Secret.EventExporterApp.Slack }}
+      {{- if .Values.Installation.V1.Secret.EventExporterApp.Slack }}
       - name: "webhook"
         webhook:
           endpoint: "{{ .Values.Installation.V1.Secret.EventExporterApp.Slack.Webhook }}"
           layout:
             text: "Tenant Cluster upgrade got triggered for {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.Installation.V1.Name }}."
-      {{ end }}
+      {{- end }}
       - name: "grafana"
         webhook:
           endpoint: "https://giantswarm.grafana.net/api/annotations/graphite"
