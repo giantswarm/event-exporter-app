@@ -7,6 +7,7 @@ rules:
       - cluster.x-k8s.io
     resources:
       - clusters
+      - machinedeployments
     verbs:
       - get
       - list
@@ -15,6 +16,9 @@ rules:
       - infrastructure.giantswarm.io
     resources:
       - awsclusters
+      - awsmachinedeployments
+      - awscontrolplanes
+      - g8scontrolplanes
     verbs:
       - get
       - list
@@ -29,10 +33,19 @@ rules:
     - list
     - watch
   - apiGroups:
+    - extensions
+    resources:
+    - ingresses
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
     - apps
     resources:
     - replicasets
     - deployments
+    - statefulsets
     verbs:
     - get
     - list
