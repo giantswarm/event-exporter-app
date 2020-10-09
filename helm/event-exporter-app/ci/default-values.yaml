@@ -6,7 +6,7 @@ Installation:
 
     Name: ""
     Customer: ""
-    Provider: 
+    Provider:
       Kind: ""
 
     Secret:
