@@ -3,6 +3,7 @@ Installation:
   V1:
     Name: ""
     Customer: ""
+    Provider: ""
 
     Secret:
       EventExporterApp:
