@@ -12,6 +12,14 @@ rules:
       - list
       - watch
   - apiGroups:
+      - infrastructure.giantswarm.io
+    resources:
+      - awsclusters
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
     - ""
     resources:
     - events
