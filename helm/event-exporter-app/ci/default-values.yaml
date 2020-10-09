@@ -1,9 +1,13 @@
 ---
 Installation:
   V1:
+    Infra:
+      TestingEnvironment: true
+
     Name: ""
     Customer: ""
-    Provider: ""
+    Provider: 
+      Kind: ""
 
     Secret:
       EventExporterApp:

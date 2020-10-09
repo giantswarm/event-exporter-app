@@ -55,7 +55,20 @@ data:
             Authorization: "{{ .Values.Installation.V1.Secret.EventExporterApp.Grafana.Token }}"
           layout:
             what: "{{ "{{" }} .InvolvedObject.Kind {{ "}}" }} - {{ "{{" }} .Reason {{ "}}" }}"
-            tags: ["Event", ""{{ "{{" }} .Reason {{ "}}" }}","{{ "{{" }} .Type {{ "}}" }}","{{ "{{" }} .InvolvedObject.Kind {{ "}}" }}","{{ "{{" }} .InvolvedObject.Name {{ "}}" }}","{{ .Values.Installation.V1.Name }}","{{ .Values.Installation.V1.Customer }}","{{ .Values.Installation.V1.Provider }}","{{ "{{" }} .Source.Component {{ "}}" }}"]
+            tags: ["event",
+              "{{ "{{" }} .Reason {{ "}}" }}",
+              "{{ "{{" }} .Type {{ "}}" }}",
+              "{{ "{{" }} .InvolvedObject.Kind {{ "}}" }}",
+              "{{ "{{" }} .InvolvedObject.Name {{ "}}" }}",
+              "{{ .Values.Installation.V1.Name }}",
+              "{{ .Values.Installation.V1.Customer }}",
+              "{{ .Values.Installation.V1.Provider.Kind }}",
+              {{- if .Values.Installation.V1.Infra.TestingEnvironment }}
+              "testing",
+              {{- else }}
+              "stable",
+              {{- end }}
+              "{{ "{{" }} .Source.Component {{ "}}" }}"]
             data: "{{ "{{" }} .Message {{ "}}" }} for {{ "{{" }} .InvolvedObject.Kind {{ "}}" }} {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.Installation.V1.Name }} reported by {{ "{{" }} .Source.Component {{ "}}" }}"
 
     {{ end }}
