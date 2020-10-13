@@ -46,6 +46,7 @@ data:
           layout:
             text: "Tenant Cluster upgrade got triggered for {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.Installation.V1.Name }}."
       {{- end }}
+
       - name: "grafana-firecracker"
         webhook:
           endpoint: "https://giantswarm.grafana.net/api/annotations/graphite"
@@ -71,4 +72,3 @@ data:
               {{- end }}
               "{{ "{{" }} .Source.Component {{ "}}" }}"]
             data: "{{ "{{" }} .Message {{ "}}" }} for {{ "{{" }} .InvolvedObject.Kind {{ "}}" }} {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.Installation.V1.Name }} reported by {{ "{{" }} .Source.Component {{ "}}" }}"
-
