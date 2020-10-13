@@ -33,19 +33,10 @@ rules:
     - list
     - watch
   - apiGroups:
-    - extensions
-    resources:
-    - ingresses
-    verbs:
-    - get
-    - list
-    - watch
-  - apiGroups:
     - apps
     resources:
     - replicasets
     - deployments
-    - statefulsets
     verbs:
     - get
     - list
