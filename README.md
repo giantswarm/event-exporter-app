@@ -77,7 +77,7 @@ For example, a team wants to see event-annotations for the custom resources they
 ```
 
 Then we can define the receiver. 
-The bottom example will send annotations to our grafana instance in `cortex`.
+The example below will send annotations to our grafana instance in `cortex`.
 It uses the `graphite` annotation API and the `graphite` event format. (Defined in the `layout` section)
 ```
       - name: "grafana-$TEAM"
