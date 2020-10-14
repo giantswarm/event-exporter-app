@@ -1,9 +1,17 @@
 ---
 Installation:
   V1:
+    Infra:
+      TestingEnvironment: true
+
     Name: ""
+    Customer: ""
+    Provider:
+      Kind: ""
 
     Secret:
       EventExporterApp:
         Slack:
           Webhook: ""
+        Grafana:
+          Token: ""

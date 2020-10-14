@@ -7,6 +7,18 @@ rules:
       - cluster.x-k8s.io
     resources:
       - clusters
+      - machinedeployments
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - infrastructure.giantswarm.io
+    resources:
+      - awsclusters
+      - awsmachinedeployments
+      - awscontrolplanes
+      - g8scontrolplanes
     verbs:
       - get
       - list
