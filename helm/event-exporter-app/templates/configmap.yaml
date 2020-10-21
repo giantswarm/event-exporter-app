@@ -44,7 +44,7 @@ data:
         webhook:
           endpoint: "{{ .Values.Installation.V1.Secret.EventExporterApp.Slack.Webhook }}"
           layout:
-            text: "Tenant Cluster upgrade got triggered for {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.Installation.V1.Name }}."
+            text: "Tenant Cluster upgrade got triggered for {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} to release {{ "{{" }} .InvolvedObject.Labels["release.giantswarm.io/version"] {{ "}}" }} on {{ .Values.Installation.V1.Name }}."
       {{- end }}
 
       - name: "grafana-firecracker"
