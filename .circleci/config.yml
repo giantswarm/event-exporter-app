@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  architect: giantswarm/architect@0.11.0
+  architect: giantswarm/architect@2.2.0
 
 workflows:
   version: 2
@@ -23,7 +23,6 @@ workflows:
           name: push-event-exporter-app-to-aws-app-collection
           app_name: "event-exporter-app"
           app_collection_repo: "aws-app-collection"
-          unique: "true"
           filters:
             # Do not trigger the job on commit.
             branches:
