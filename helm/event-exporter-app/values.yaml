@@ -6,5 +6,5 @@ image:
   #
   name: giantswarm/kubernetes-event-exporter
   pullPolicy: IfNotPresent
-  registry: quay.io
+  registry: docker.io
   tag: "0.9"
