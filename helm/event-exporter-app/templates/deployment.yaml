@@ -14,7 +14,7 @@ spec:
       serviceAccountName: event-exporter-app
       containers:
         - name: event-exporter-app
-          image: "{{ .Values.image.registry }}/{{ .Values.image.name }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.registry.domain }}/{{ .Values.image.name }}:{{ .Values.image.tag }}"
           imagePullPolicy: "{{ .Values.image.pullPolicy }}"
           args:
             - -conf=/data/config.yaml

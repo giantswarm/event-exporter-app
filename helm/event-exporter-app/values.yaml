@@ -8,3 +8,21 @@ image:
   pullPolicy: IfNotPresent
   registry: docker.io
   tag: "0.9"
+
+
+testingEnvironment: false
+managementCluster:
+  name: ""
+  customer: ""
+
+provider:
+  kind: ""
+
+slack:
+  webhook: ""
+
+grafana:
+  token: ""
+
+registry:
+  domain: docker.io
