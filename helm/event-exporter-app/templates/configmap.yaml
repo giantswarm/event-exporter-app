@@ -44,7 +44,7 @@ data:
         webhook:
           endpoint: "{{ .Values.slack.webhook }}"
           layout:
-            text: "Workload cluster upgrade triggered for {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} to release {{ "{{" }} .InvolvedObject.Labels["release.giantswarm.io/version"] {{ "}}" }} on {{ .Values.managementCluster.name }}."
+            text: "Workload cluster upgrade triggered for {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} to release {{ "{{" }} .InvolvedObject.Labels['release.giantswarm.io/version'] {{ "}}" }} on {{ .Values.managementCluster.name }}."
       {{- end }}
 
       - name: "grafana-firecracker"
