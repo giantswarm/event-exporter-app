@@ -7,7 +7,7 @@ image:
   name: giantswarm/kubernetes-event-exporter
   pullPolicy: IfNotPresent
   registry: docker.io
-  tag: "0.9"
+  tag: "0.10"
 
 
 testingEnvironment: false
