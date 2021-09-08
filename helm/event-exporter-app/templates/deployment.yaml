@@ -3,12 +3,12 @@ kind: Deployment
 metadata:
   name: event-exporter-app
   namespace: giantswarm
+  labels:
+    {{- include "labels.common" . | nindent 4 }}
 spec:
   replicas: 1
   template:
     metadata:
-      annotations:
-        releaseRevision: {{ .Release.Revision | quote }}
       labels:
         {{- include "labels.common" . | nindent 8 }}
         app: event-exporter-app
