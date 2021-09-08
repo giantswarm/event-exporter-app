@@ -4,7 +4,7 @@ metadata:
   name: {{ include "resource.networkPolicy.name" . }}
   namespace: {{ include "resource.default.namespace" . }}
   labels:
-    {{- include "labels.common" . | nindent 4 }}
+    app: event-exporter-app
 spec:
   podSelector:
     matchLabels:
