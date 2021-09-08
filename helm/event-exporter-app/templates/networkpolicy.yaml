@@ -8,7 +8,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      {{- include "labels.selector" . | nindent 6 }}
+      {{- include "labels.common" . | nindent 6 }}
   egress:
   - {}
   policyTypes:
