@@ -16,7 +16,7 @@ Any matched event will trigger the associated receiver.
 
 ```
 - match:
-  - apiversion: "cluster.x-k8s.io/v1alpha2"
+  - apiversion: "cluster.x-k8s.io/v1alpha3"
     kind: "Cluster"
     reason: "ClusterIsUpdating"
     receiver: "webhook"
