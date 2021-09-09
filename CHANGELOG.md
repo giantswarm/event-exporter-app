@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Revert release version from text.
+- Revert image version.
+
 ## [0.4.4] - 2021-09-08
 
 ### Fixed
