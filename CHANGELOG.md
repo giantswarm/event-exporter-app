@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.5.0] - 2021-09-10
 
+## [0.5.0] - 2021-09-10
+
 ### Added
 
 - Cluster upgrade announcement event.
@@ -87,6 +89,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2020-09-23
 
 [Unreleased]: https://github.com/giantswarm/event-exporter-app/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/giantswarm/event-exporter-app/compare/v0.5.0...v0.5.0
 [0.5.0]: https://github.com/giantswarm/event-exporter-app/compare/v0.4.6...v0.5.0
 [0.4.6]: https://github.com/giantswarm/event-exporter-app/compare/v0.4.5...v0.4.6
 [0.4.5]: https://github.com/giantswarm/event-exporter-app/compare/v0.4.4...v0.4.5
