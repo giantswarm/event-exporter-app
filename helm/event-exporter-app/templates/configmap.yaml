@@ -21,14 +21,14 @@ data:
           - kind: "Cluster|AWSCluster|MachineDeployment|AWSMachineDeployment|G8sControlPlane|AWSControlPlane"
             receiver: "grafana-firecracker"
         {{- if .Values.slack }}
-        # We want to send Tenant Cluster upgrade events to Slack via the webhook
+        # We want to send Workload Cluster upgrade events to Slack via the webhook
         # receiver. Therefore we match for events attached to the CAPI Cluster
         # CRs.
         - match:
           - kind: "Cluster"
             reason: "ClusterIsUpdating"
             receiver: "webhook-upgrade"
-        # We want to send Tenant Cluster upgrade announcement to Slack via the webhook
+        # We want to send Workload Cluster upgrade announcement to Slack via the webhook
         # receiver. Therefore we match for events attached to the CAPI Cluster
         # CRs.
         - match:
@@ -55,7 +55,7 @@ data:
         webhook:
           endpoint: "{{ .Values.slack.webhook }}"
           layout:
-            text: "{{ "{{" }} .Reason {{ "}}" }}"
+            text: "{{ "{{" }} .Message {{ "}}" }}"
       {{- end }}
 
       - name: "grafana-firecracker"
