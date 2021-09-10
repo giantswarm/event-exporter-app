@@ -27,7 +27,14 @@ data:
         - match:
           - kind: "Cluster"
             reason: "ClusterIsUpdating"
-            receiver: "webhook"
+            receiver: "webhook-upgrade"
+        # We want to send Tenant Cluster upgrade announcement to Slack via the webhook
+        # receiver. Therefore we match for events attached to the CAPI Cluster
+        # CRs.
+        - match:
+          - kind: "Cluster"
+            reason: "ClusterUpgradeAnnouncement"
+            receiver: "webhook-announcement"
         {{- end }}
 
         # We want to ignore all other events once we handled the events we are
@@ -39,11 +46,16 @@ data:
     receivers:
 
       {{- if .Values.slack }}
-      - name: "webhook"
+      - name: "webhook-upgrade"
         webhook:
           endpoint: "{{ .Values.slack.webhook }}"
           layout:
             text: "Workload cluster upgrade triggered for {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }}."
+      - name: "webhook-announcement"
+        webhook:
+          endpoint: "{{ .Values.slack.webhook }}"
+          layout:
+            text: "{{ "{{" }} .Reason {{ "}}" }}"
       {{- end }}
 
       - name: "grafana-firecracker"
