@@ -53,21 +53,21 @@ data:
     receivers:
 
       {{- if .Values.slack }}
-      - name: "webhook-upgrade"
-        webhook:
-          endpoint: "{{ .Values.slack.webhook }}"
-          layout:
-            text: "Workload cluster upgrade triggered for {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }}."
       - name: "webhook-announcement"
         webhook:
           endpoint: "{{ .Values.slack.webhook }}"
           layout:
             text: "{{ "{{" }} .Message {{ "}}" }}"
+      - name: "webhook-upgrade"
+        webhook:
+          endpoint: "{{ .Values.slack.webhook }}"
+          layout:
+            text: "The cluster upgrade of { "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has begun, this upgrade will include replacing of nodes."
       - name: "webhook-upgrade-complete"
         webhook:
           endpoint: "{{ .Values.slack.webhook }}"
           layout:
-            text: "Workload cluster upgrade completed for {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }}."
+            text: "The cluster upgrade of { "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has completed and all nodes have been replaced."
       {{- end }}
 
       - name: "grafana-firecracker"
