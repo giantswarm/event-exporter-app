@@ -10,6 +10,8 @@ spec:
       labels:
         app: event-exporter-app
         version: v1
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
       serviceAccountName: event-exporter-app
       containers:
