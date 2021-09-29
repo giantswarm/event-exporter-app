@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0] - 2021-09-29
+
 ### Added
 
 - Trigger the pod to recreate on configmap change
@@ -102,7 +104,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.0] - 2020-09-23
 
-[Unreleased]: https://github.com/giantswarm/event-exporter-app/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/giantswarm/event-exporter-app/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/giantswarm/event-exporter-app/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/giantswarm/event-exporter-app/compare/v0.5.1...v0.6.0
 [0.5.1]: https://github.com/giantswarm/event-exporter-app/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/giantswarm/event-exporter-app/compare/v0.4.6...v0.5.0
