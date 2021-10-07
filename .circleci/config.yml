@@ -30,3 +30,16 @@ workflows:
             # Trigger the job also on git tag.
             tags:
               only: /^v.*/
+
+      - architect/push-to-app-collection:
+          context: "architect"
+          name: push-event-exporter-app-to-azure-app-collection
+          app_name: "event-exporter-app"
+          app_collection_repo: "azure-app-collection"
+          filters:
+            # Do not trigger the job on commit.
+            branches:
+              ignore: /.*/
+            # Trigger the job also on git tag.
+            tags:
+              only: /^v.*/
