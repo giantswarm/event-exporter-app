@@ -5,4 +5,5 @@ appVersion: v0.10
 description: The event-exporter-app runs on Control Planes to watch and act upon Kubernetes events.
 home: https://github.com/opsgenie/kubernetes-event-exporter
 annotations:
+  application.giantswarm.io/team: "phoenix"
   config.giantswarm.io/version: 1.x.x
