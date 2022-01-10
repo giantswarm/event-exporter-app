@@ -62,7 +62,7 @@ data:
         webhook:
           endpoint: "{{ .Values.slack.webhook }}"
           layout:
-            text: "The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has begun, this upgrade will include replacing of nodes."
+            text: "The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has begun. This upgrade will include replacing of nodes."
       - name: "webhook-upgrade-complete"
         webhook:
           endpoint: "{{ .Values.slack.webhook }}"
