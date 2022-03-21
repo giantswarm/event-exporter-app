@@ -1,3 +1,5 @@
+name: event-exporter
+
 image:
   # The image name is different from the repo because we use some upstream
   # project under the hood.
@@ -30,3 +32,6 @@ registry:
 project:
   branch: "[[ .Branch ]]"
   commit: "[[ .SHA ]]"
+
+verticalPodAutoscaler:
+  enabled: true
