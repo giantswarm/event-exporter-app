@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: F
+kind: Deployment
 metadata:
   name: {{ .Values.name }}
   namespace: {{ .Release.Namespace }}
