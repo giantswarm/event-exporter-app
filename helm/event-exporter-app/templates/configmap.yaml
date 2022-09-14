@@ -42,6 +42,13 @@ data:
           - kind: "Cluster"
             reason: "ClusterUpdated"
             receiver: "webhook-upgrade-complete"
+        # We want to send Workload Cluster instance refresh starting events to Slack via the webhook
+        # receiver. Therefore we match for events attached to the AWSCluster
+        # CRs.
+        - match:
+          - kind: "AWSCluster"
+            reason: "InstanceRefreshIsStarting"
+            receiver: "webhook-instance-refresh-starting"
         # We want to send Workload Cluster instance refresh for all master and worker nodes completed announcement to Slack via the webhook
         # receiver. Therefore we match for events attached to the AWSCluster
         # CRs.
@@ -56,6 +63,13 @@ data:
           - kind: "AWSCluster"
             reason: "InstanceRefreshCancelled"
             receiver: "webhook-instance-refresh-cancelled"
+        # We want to send Workload Cluster instance refresh starting events to Slack via the webhook
+        # receiver. Therefore we match for events attached to the AWSControlplane
+        # CRs.
+        - match:
+          - kind: "AWSControlplane"
+            reason: "InstanceRefreshIsStarting"
+            receiver: "webhook-instance-refresh-starting"
         # We want to send Workload Cluster instance refresh for all master nodes completed announcement to Slack via the webhook
         # receiver. Therefore we match for events attached to the AWSControlplane
         # CRs.
@@ -70,6 +84,13 @@ data:
           - kind: "AWSControlplane"
             reason: "InstanceRefreshCancelled"
             receiver: "webhook-instance-refresh-cancelled"
+        # We want to send Workload Cluster instance refresh starting events to Slack via the webhook
+        # receiver. Therefore we match for events attached to the AWSMachineDeployment
+        # CRs.
+        - match:
+          - kind: "AWSMachineDeployment"
+            reason: "InstanceRefreshIsStarting"
+            receiver: "webhook-instance-refresh-starting"
         # We want to send Workload Cluster instance refresh for all worker nodes completed announcement to Slack via the webhook
         # receiver. Therefore we match for events attached to the AWSMachineDeployment
         # CRs.
@@ -110,6 +131,11 @@ data:
           endpoint: "{{ .Values.slack.webhook }}"
           layout:
             text: "The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has completed and all nodes have been replaced."
+      - name: "webhook-instance-refresh-starting"
+        webhook:
+          endpoint: "{{ .Values.slack.webhook }}"
+          layout:
+            text: "The instance refresh of {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has started and will replace all nodes."
       - name: "webhook-instance-refresh-complete"
         webhook:
           endpoint: "{{ .Values.slack.webhook }}"
