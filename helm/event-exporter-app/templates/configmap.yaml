@@ -135,17 +135,17 @@ data:
         webhook:
           endpoint: "{{ .Values.slack.webhook }}"
           layout:
-            text: "The instance refresh of {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has started and will replace all nodes."
+            text: "The instance refresh of {{ "{{" }} .InvolvedObject.Kind {{ "}}" }} {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has started and will replace all nodes."
       - name: "webhook-instance-refresh-complete"
         webhook:
           endpoint: "{{ .Values.slack.webhook }}"
           layout:
-            text: "The instance refresh of {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has completed and all nodes have been replaced."
+            text: "The instance refresh of {{ "{{" }} .InvolvedObject.Kind{{ "}}" }} {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has completed and all nodes have been replaced."
       - name: "webhook-instance-refresh-cancelled"
         webhook:
           endpoint: "{{ .Values.slack.webhook }}"
           layout:
-            text: "The instance refresh of {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} is cancelled."
+            text: "The instance refresh of {{ "{{" }} .InvolvedObject.Kind{{ "}}" }} {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} is cancelled."
       {{- end }}
 
       - name: "grafana-firecracker"
