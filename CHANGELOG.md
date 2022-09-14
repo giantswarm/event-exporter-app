@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Events for EC2 instance refresh.
+
 ## [0.9.0] - 2022-03-21
 
 ### Added
