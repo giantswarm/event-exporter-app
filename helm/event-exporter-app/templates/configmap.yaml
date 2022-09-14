@@ -48,42 +48,42 @@ data:
         - match:
           - kind: "AWSCluster"
             reason: "InstanceRefreshSuccessful"
-            receiver: "webhook-cluster-instance-refresh-complete"
+            receiver: "webhook-instance-refresh-complete"
         # We want to send Workload Cluster instance refresh for all master and worker nodes cancelled announcement to Slack via the webhook
         # receiver. Therefore we match for events attached to the AWSCluster
         # CRs.
         - match:
           - kind: "AWSCluster"
             reason: "InstanceRefreshCancelled"
-            receiver: "webhook-cluster-instance-refresh-cancelled"
+            receiver: "webhook-instance-refresh-cancelled"
         # We want to send Workload Cluster instance refresh for all master nodes completed announcement to Slack via the webhook
         # receiver. Therefore we match for events attached to the AWSControlplane
         # CRs.
         - match:
           - kind: "AWSControlplane"
             reason: "InstanceRefreshSuccessful"
-            receiver: "webhook-cluster-instance-refresh-complete"
+            receiver: "webhook-instance-refresh-complete"
         # We want to send Workload Cluster instance refresh for all master nodes cancelled announcement to Slack via the webhook
         # receiver. Therefore we match for events attached to the AWSControlplane
         # CRs.
         - match:
           - kind: "AWSControlplane"
             reason: "InstanceRefreshCancelled"
-            receiver: "webhook-cluster-instance-refresh-cancelled"
+            receiver: "webhook-instance-refresh-cancelled"
         # We want to send Workload Cluster instance refresh for all worker nodes completed announcement to Slack via the webhook
         # receiver. Therefore we match for events attached to the AWSMachineDeployment
         # CRs.
         - match:
           - kind: "AWSMachineDeployment"
             reason: "InstanceRefreshSuccessful"
-            receiver: "webhook-cluster-instance-refresh-complete"
+            receiver: "webhook-instance-refresh-complete"
         # We want to send Workload Cluster instance refresh for all worker nodes cancelled announcement to Slack via the webhook
         # receiver. Therefore we match for events attached to the AWSMachineDeployment
         # CRs.
         - match:
           - kind: "AWSMachineDeployment"
             reason: "InstanceRefreshCancelled"
-            receiver: "webhook-cluster-instance-refresh-cancelled"
+            receiver: "webhook-instance-refresh-cancelled"
         {{- end }}
 
         # We want to ignore all other events once we handled the events we are
@@ -110,12 +110,12 @@ data:
           endpoint: "{{ .Values.slack.webhook }}"
           layout:
             text: "The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has completed and all nodes have been replaced."
-      - name: "webhook-cluster-instance-refresh-complete"
+      - name: "webhook-instance-refresh-complete"
         webhook:
           endpoint: "{{ .Values.slack.webhook }}"
           layout:
             text: "The instance refresh of {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has completed and all nodes have been replaced."
-      - name: "webhook-cluster-instance-refresh-cancelled"
+      - name: "webhook-instance-refresh-cancelled"
         webhook:
           endpoint: "{{ .Values.slack.webhook }}"
           layout:
