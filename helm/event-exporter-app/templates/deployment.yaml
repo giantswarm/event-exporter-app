@@ -26,7 +26,7 @@ spec:
           imagePullPolicy: "{{ .Values.image.pullPolicy }}"
           securityContext:
             {{- with .Values.securityContext }}
-              {{- . | toYaml | nindent 10 }}
+              {{- . | toYaml | nindent 12 }}
             {{- end }}
           args:
             - -conf=/data/config.yaml
