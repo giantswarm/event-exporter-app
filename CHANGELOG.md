@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Configured the use of the runtime/default seccomp profile. (Adding PSP, changing RBAC)
+
 ## [0.10.1] - 2022-09-14
 
 ### Changed
