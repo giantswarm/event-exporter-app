@@ -10,17 +10,11 @@ spec:
   hostIPC: false
   hostPID: false
   fsGroup:
-    ranges:
-    - max: 65535
-      min: 1
-    rule: MustRunAs
+    rule: RunAsAny
   runAsUser:
-    rule: MustRunAsNonRoot
+    rule: RunAsAny
   runAsGroup:
-    rule: MustRunAs
-    ranges:
-      - min: 1
-        max: 65535
+    rule: RunAsAny
   seLinux:
     rule: RunAsAny
   supplementalGroups:
@@ -28,3 +22,7 @@ spec:
   volumes:
   - configMap
   - secret
+  - emptyDIr
+  - downwardAPI
+  - persistentVolumeClaim
+  - projected
