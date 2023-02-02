@@ -22,7 +22,7 @@ spec:
   volumes:
   - configMap
   - secret
-  - emptyDIr
+  - emptyDir
   - downwardAPI
   - persistentVolumeClaim
   - projected
