@@ -1,0 +1,28 @@
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: {{ .Values.name }}-psp
+  annotations:
+    seccomp.security.alpha.kubernetes.io/allowedProfileNames: 'runtime/default'
+spec:
+  allowPrivilegeEscalation: false
+  hostNetwork: false
+  hostIPC: false
+  hostPID: false
+  fsGroup:
+    rule: RunAsAny
+  runAsUser:
+    rule: RunAsAny
+  runAsGroup:
+    rule: RunAsAny
+  seLinux:
+    rule: RunAsAny
+  supplementalGroups:
+    rule: RunAsAny
+  volumes:
+  - configMap
+  - secret
+  - emptyDir
+  - downwardAPI
+  - persistentVolumeClaim
+  - projected
