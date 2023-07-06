@@ -1,0 +1,21 @@
+apiVersion: kyverno.io/v2alpha1
+kind: PolicyException
+metadata:
+  name: {{ .Values.name }}-exceptions
+  namespace: {{ .Release.Namespace }}
+spec:
+  exceptions:
+  - policyName: require-run-as-nonroot 
+    ruleNames:
+    - run-as-non-root 
+    - autogen-run-as-non-root
+  match:
+    any:
+    - resources:
+        kinds:
+        - Deployment
+        - Pod
+        namespaces:
+        - {{ .Release.Namespace }}
+        names:
+        - {{ .Values.name }}*
