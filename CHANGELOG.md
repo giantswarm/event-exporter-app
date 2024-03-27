@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add global.podSecurityStandards.enforced value for PSS migration.
 
+### Fixed
+
+- Allow access to `batch/jobs` in the ClusterRole.
+
 ## [0.11.1] - 2023-12-11
 
 ### Changed
