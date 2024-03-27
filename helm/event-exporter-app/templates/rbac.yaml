@@ -67,7 +67,7 @@ rules:
     - podsecuritypolicies
     verbs:
     - use
-{{- end -}}
+{{- end }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
