@@ -1,6 +1,8 @@
 # DO NOT EDIT. Generated with:
 #
-#    devctl@6.23.3
+#    devctl
+#
+#    https://github.com/giantswarm/devctl/blob/bde2dbd935e72c2705fd77638fe6914cd3d25699/pkg/gen/input/workflows/internal/file/gitleaks.yaml.template
 #
 name: gitleaks
 
@@ -10,7 +12,7 @@ jobs:
   gitleaks:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
+    - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       with:
         fetch-depth: '0'
     - name: gitleaks-action
