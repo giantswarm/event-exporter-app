@@ -28,6 +28,10 @@ data:
           - kind: "Cluster"
             reason: "ClusterIsUpdating"
             receiver: "webhook-upgrade"
+        - match:
+          - kind: "Cluster"
+            reason: "Upgrading"
+            receiver: "webhook-upgrade"
         # We want to send Workload Cluster upgrade announcement to Slack via the webhook
         # receiver. Therefore we match for events attached to the CAPI Cluster
         # CRs.
@@ -41,6 +45,10 @@ data:
         - match:
           - kind: "Cluster"
             reason: "ClusterUpdated"
+            receiver: "webhook-upgrade-complete"
+        - match:
+          - kind: "Cluster"
+            reason: "Upgraded"
             receiver: "webhook-upgrade-complete"
         # We want to send Workload Cluster instance refresh starting events to Slack via the webhook
         # receiver. Therefore we match for events attached to the AWSCluster
