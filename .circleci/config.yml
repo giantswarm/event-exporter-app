@@ -43,3 +43,25 @@ workflows:
             # Trigger the job also on git tag.
             tags:
               only: /^v.*/
+
+      - architect/push-to-app-collection:
+          context: architect
+          name: push-to-capa-app-collection
+          app_name: "event-exporter-app"
+          app_collection_repo: "capa-app-collection"
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v.*/
+
+      - architect/push-to-app-collection:
+          context: architect
+          name: push-to-capz-app-collection
+          app_name: "event-exporter-app"
+          app_collection_repo: "capz-app-collection"
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v.*/
