@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.13.1] - 2024-08-14
+
 ### Fixed
 
 - Fix PSP and Kyverno.
@@ -173,7 +175,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.0] - 2020-09-23
 
-[Unreleased]: https://github.com/giantswarm/event-exporter-app/compare/v0.13.0...HEAD
+[Unreleased]: https://github.com/giantswarm/event-exporter-app/compare/v0.13.1...HEAD
+[0.13.1]: https://github.com/giantswarm/event-exporter-app/compare/v0.13.0...v0.13.1
 [0.13.0]: https://github.com/giantswarm/event-exporter-app/compare/v0.12.0...v0.13.0
 [0.12.0]: https://github.com/giantswarm/event-exporter-app/compare/v0.11.1...v0.12.0
 [0.11.1]: https://github.com/giantswarm/event-exporter-app/compare/v0.11.0...v0.11.1
