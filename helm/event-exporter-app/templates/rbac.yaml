@@ -58,7 +58,7 @@ rules:
     - get
     - list
     - watch
-{{- if not .Values.global.podSecurityStandards.enforced }}
+{{- if and (le (int .Capabilities.KubeVersion.Minor) 24) (not .Values.global.podSecurityStandards.enforced) }}
   - apiGroups:
     - extensions
     resourceNames:
