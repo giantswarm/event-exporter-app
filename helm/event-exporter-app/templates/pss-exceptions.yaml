@@ -25,3 +25,4 @@ spec:
         - {{ .Release.Namespace }}
         names:
         - {{ .Values.name }}*
+{{- end -}}
