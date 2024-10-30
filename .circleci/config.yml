@@ -9,46 +9,50 @@ workflows:
     jobs:
       - architect/push-to-app-catalog:
           name: push-event-exporter-app-to-control-plane-app-catalog
-          app_catalog: "control-plane-catalog"
-          app_catalog_test: "control-plane-test-catalog"
-          chart: "event-exporter-app"
-          context: "architect"
+          app_catalog: control-plane-catalog
+          app_catalog_test: control-plane-test-catalog
+          chart: event-exporter-app
+          context: architect
           filters:
             # Trigger the job also on git tag.
             tags:
               only: /^v.*/
+            branches:
+              ignore:
+                - main
+                - master
 
       - architect/push-to-app-collection:
-          context: "architect"
+          context: architect
           name: push-event-exporter-app-to-aws-app-collection
-          app_name: "event-exporter-app"
-          app_collection_repo: "aws-app-collection"
+          app_name: event-exporter-app
+          app_collection_repo: aws-app-collection
           filters:
             # Do not trigger the job on commit.
             branches:
               ignore: /.*/
-            # Trigger the job also on git tag.
+              # Trigger the job also on git tag.
             tags:
               only: /^v.*/
 
       - architect/push-to-app-collection:
-          context: "architect"
+          context: architect
           name: push-event-exporter-app-to-azure-app-collection
-          app_name: "event-exporter-app"
-          app_collection_repo: "azure-app-collection"
+          app_name: event-exporter-app
+          app_collection_repo: azure-app-collection
           filters:
             # Do not trigger the job on commit.
             branches:
               ignore: /.*/
-            # Trigger the job also on git tag.
+              # Trigger the job also on git tag.
             tags:
               only: /^v.*/
 
       - architect/push-to-app-collection:
           context: architect
           name: push-to-capa-app-collection
-          app_name: "event-exporter-app"
-          app_collection_repo: "capa-app-collection"
+          app_name: event-exporter-app
+          app_collection_repo: capa-app-collection
           filters:
             branches:
               ignore: /.*/
@@ -58,8 +62,8 @@ workflows:
       - architect/push-to-app-collection:
           context: architect
           name: push-to-capz-app-collection
-          app_name: "event-exporter-app"
-          app_collection_repo: "capz-app-collection"
+          app_name: event-exporter-app
+          app_collection_repo: capz-app-collection
           filters:
             branches:
               ignore: /.*/
