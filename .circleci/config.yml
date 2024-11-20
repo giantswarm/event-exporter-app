@@ -13,6 +13,19 @@ workflows:
           chart: event-exporter-app
           app_catalog: control-plane-catalog
           app_catalog_test: control-plane-test-catalog
+          persist_chart_archive: true
+          filters:
+            branches:
+              ignore:
+                - main
+                - master
+            tags:
+              only: /^v.*/
+
+      - architect/run-tests-with-ats:
+          name: run-tests-with-ats
+          requires:
+            - push-to-control-plane-catalog
           filters:
             branches:
               ignore:
