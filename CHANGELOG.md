@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Repository: Some love. ❤️ ([#162](https://github.com/giantswarm/event-exporter-app/pull/162))
   - CircleCI: Rework `config.yml`.
 
+### Removed
+
+- Repository: Some love. ❤️ ([#162](https://github.com/giantswarm/event-exporter-app/pull/162))
+  - Nancy: Remove `.nancy-ignore*`.
+
 ## [0.13.1] - 2024-08-14
 
 ### Fixed
