@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Repository: Some love. ❤️ ([#162](https://github.com/giantswarm/event-exporter-app/pull/162))
   - ABS: Add `main.yaml`.
   - ATS: Add `main.yaml` & tests.
+  - Renovate: Add `renovate.json5`.
 
 ### Changed
 
