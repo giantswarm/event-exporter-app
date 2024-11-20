@@ -9,6 +9,7 @@ workflows:
       - architect/push-to-app-catalog:
           name: push-to-control-plane-catalog
           context: architect
+          executor: app-build-suite
           chart: event-exporter-app
           app_catalog: control-plane-catalog
           app_catalog_test: control-plane-test-catalog
