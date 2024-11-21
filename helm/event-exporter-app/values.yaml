@@ -37,18 +37,20 @@ verticalPodAutoscaler:
   enabled: true
 
 # Add seccomp to pod security context
-podSecurityContext:
-  seccompProfile:
-    type: RuntimeDefault
+podSecurityContext: {}
 
 # Add seccomp to container security context
 securityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
   allowPrivilegeEscalation: false
   seccompProfile:
     type: RuntimeDefault
   capabilities:
     drop:
       - ALL
+  readOnlyRootFilesystem: true
 
 global:
   podSecurityStandards:
