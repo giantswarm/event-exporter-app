@@ -29,10 +29,6 @@ grafana:
 registry:
   domain: gsoci.azurecr.io
 
-project:
-  branch: "[[ .Branch ]]"
-  commit: "[[ .SHA ]]"
-
 verticalPodAutoscaler:
   enabled: true
 

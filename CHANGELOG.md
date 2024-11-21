@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - CircleCI: Rework `config.yml`.
   - Docs: Rework `README.md`.
   - ABS: Satisfy linter.
+  - ATS: Fix tests.
 
 ### Removed
 

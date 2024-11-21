@@ -57,17 +57,6 @@
         "podSecurityContext": {
             "type": "object"
         },
-        "project": {
-            "type": "object",
-            "properties": {
-                "branch": {
-                    "type": "string"
-                },
-                "commit": {
-                    "type": "string"
-                }
-            }
-        },
         "provider": {
             "type": "object",
             "properties": {
