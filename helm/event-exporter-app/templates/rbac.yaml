@@ -80,4 +80,4 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: event-exporter-app
-    namespace: giantswarm
+    namespace: {{ .Release.Namespace }}
