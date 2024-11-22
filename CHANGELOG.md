@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Chart: More love! ([#164](https://github.com/giantswarm/event-exporter-app/pull/164))
   - Chart: Rework `Chart.yaml`.
+  - Chart: Rework `values.yaml`.
 
 ## [0.14.0] - 2024-11-22
 
