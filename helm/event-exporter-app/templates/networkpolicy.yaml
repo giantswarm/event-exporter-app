@@ -1,16 +1,14 @@
-kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
 metadata:
-  name: {{ include "resource.networkPolicy.name" . }}
-  namespace: {{ include "resource.default.namespace" . }}
-  labels:
-    app: event-exporter-app
+  name: {{ include "event-exporter.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "event-exporter.labels" . | nindent 4 }}
 spec:
   podSelector:
-    matchLabels:
-      app: event-exporter-app
+    matchLabels: {{ include "event-exporter.selectorLabels" . | nindent 6 }}
+  policyTypes:
+  - Ingress
+  - Egress
   egress:
   - {}
-  policyTypes:
-  - Egress
-  - Ingress
