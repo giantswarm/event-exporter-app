@@ -1,41 +1,21 @@
-name: event-exporter
-
-image:
-  # The image name is different from the repo because we use some upstream
-  # project under the hood.
-  #
-  #     https://github.com/opsgenie/kubernetes-event-exporter
-  #
-  name: giantswarm/kubernetes-event-exporter
-  pullPolicy: IfNotPresent
-  registry: gsoci.azurecr.io
-  tag: "0.9"
-
-
-testingEnvironment: false
-managementCluster:
-  name: ""
-  customer: ""
-
-provider:
-  kind: ""
-
-slack:
-  webhook: ""
-
-grafana:
-  token: ""
-
+# -- Registry settings.
 registry:
+  # -- Registry host.
   domain: gsoci.azurecr.io
 
-verticalPodAutoscaler:
-  enabled: true
+# -- Image settings.
+image:
+  # -- Image repository.
+  name: giantswarm/kubernetes-event-exporter
+  # -- Image tag.
+  tag: "0.9"
+  # -- Image pull policy.
+  pullPolicy: IfNotPresent
 
-# Add seccomp to pod security context
+# -- Pod Security Context.
 podSecurityContext: {}
 
-# Add seccomp to container security context
+# -- Container Security Context.
 securityContext:
   runAsNonRoot: true
   runAsUser: 1000
@@ -45,9 +25,35 @@ securityContext:
     type: RuntimeDefault
   capabilities:
     drop:
-      - ALL
+    - ALL
   readOnlyRootFilesystem: true
 
-global:
-  podSecurityStandards:
-    enforced: false
+# -- Management cluster the event exporter is running in.
+managementCluster:
+  # -- Management cluster name.
+  name: ""
+  # -- Customer the management cluster belongs to.
+  customer: ""
+
+# -- If the management cluster the event exporter is running in is a testing environment.
+testingEnvironment: false
+
+# -- Provider of the management cluster the event exporter is running in.
+provider:
+  # -- Provider kind.
+  kind: ""
+
+# -- Slack settings.
+slack:
+  # -- Slack webhook URL.
+  webhook: ""
+
+# -- Grafana settings.
+grafana:
+  # -- Grafana authentication token.
+  token: ""
+
+# -- Vertical Pod Autoscaler settings.
+verticalPodAutoscaler:
+  # -- If Vertical Pod Autoscaler is enabled.
+  enabled: true

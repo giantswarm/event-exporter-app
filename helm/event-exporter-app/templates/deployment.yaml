@@ -1,43 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.name }}
+  name: {{ include "event-exporter.fullname" . }}
   namespace: {{ .Release.Namespace }}
-  labels:
-    {{- include "labels.common" . | nindent 4 }}
+  labels: {{ include "event-exporter.labels" . | nindent 4 }}
 spec:
+  selector:
+    matchLabels: {{ include "event-exporter.selectorLabels" . | nindent 6 }}
   replicas: 1
   template:
     metadata:
-      labels:
-        app: event-exporter-app
-        version: v1
+      labels: {{ include "event-exporter.labels" . | nindent 8 }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
-      serviceAccountName: event-exporter-app
-      securityContext:
-        {{- with .Values.podSecurityContext }}
-          {{- . | toYaml | nindent 8 }}
-        {{- end }}
+      serviceAccountName: {{ include "event-exporter.fullname" . }}
+      {{- if .Values.podSecurityContext }}
+      securityContext: {{ toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- end }}
       containers:
-        - name: event-exporter-app
-          image: "{{ .Values.registry.domain }}/{{ .Values.image.name }}:{{ .Values.image.tag }}"
-          imagePullPolicy: "{{ .Values.image.pullPolicy }}"
-          securityContext:
-            {{- with .Values.securityContext }}
-              {{- . | toYaml | nindent 12 }}
-            {{- end }}
-          args:
-            - -conf=/data/config.yaml
-          volumeMounts:
-            - mountPath: /data
-              name: cfg
+      - name: event-exporter
+        image: {{ .Values.registry.domain }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        {{- if .Values.securityContext }}
+        securityContext: {{ toYaml .Values.securityContext | nindent 10 }}
+        {{- end }}
+        args:
+        - --conf
+        - /data/config.yaml
+        volumeMounts:
+        - name: config
+          mountPath: /data
       volumes:
-        - name: cfg
-          configMap:
-            name: event-exporter-app
-  selector:
-    matchLabels:
-      app: event-exporter-app
-      version: v1
+      - name: config
+        configMap:
+          name: {{ include "event-exporter.fullname" . }}
