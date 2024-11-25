@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Templates: Rework `NetworkPolicy`.
   - Templates: Rework RBAC.
   - Templates: Rework `ServiceAccount`.
+  - Templates: Rework `VerticalPodAutoscaler`.
 
 ### Removed
 
