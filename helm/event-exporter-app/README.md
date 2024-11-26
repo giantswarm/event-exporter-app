@@ -1,6 +1,6 @@
 # event-exporter-app
 
-![Version: 0.14.0](https://img.shields.io/badge/Version-0.14.0-informational?style=flat-square) ![AppVersion: 0.9](https://img.shields.io/badge/AppVersion-0.9-informational?style=flat-square)
+![Version: 0.14.0](https://img.shields.io/badge/Version-0.14.0-informational?style=flat-square) ![AppVersion: v0.11](https://img.shields.io/badge/AppVersion-v0.11-informational?style=flat-square)
 
 The Event Exporter runs on management clusters to watch and act upon Kubernetes events.
 
@@ -12,10 +12,10 @@ The Event Exporter runs on management clusters to watch and act upon Kubernetes 
 |-----|------|---------|-------------|
 | grafana | object | `{"token":""}` | Grafana settings. |
 | grafana.token | string | `""` | Grafana authentication token. |
-| image | object | `{"name":"giantswarm/kubernetes-event-exporter","pullPolicy":"IfNotPresent","tag":"0.9"}` | Image settings. |
+| image | object | `{"name":"giantswarm/kubernetes-event-exporter","pullPolicy":"IfNotPresent","tag":""}` | Image settings. |
 | image.name | string | `"giantswarm/kubernetes-event-exporter"` | Image repository. |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy. |
-| image.tag | string | `"0.9"` | Image tag. |
+| image.tag | string | `""` | Image tag. Defaults to `.Chart.AppVersion`. |
 | managementCluster | object | `{"customer":"","name":""}` | Management cluster the event exporter is running in. |
 | managementCluster.customer | string | `""` | Customer the management cluster belongs to. |
 | managementCluster.name | string | `""` | Management cluster name. |

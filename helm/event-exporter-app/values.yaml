@@ -7,8 +7,8 @@ registry:
 image:
   # -- Image repository.
   name: giantswarm/kubernetes-event-exporter
-  # -- Image tag.
-  tag: "0.9"
+  # -- Image tag. Defaults to `.Chart.AppVersion`.
+  tag: ""
   # -- Image pull policy.
   pullPolicy: IfNotPresent
 
