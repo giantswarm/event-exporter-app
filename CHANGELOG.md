@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Templates: Rework RBAC.
   - Templates: Rework `ServiceAccount`.
   - Templates: Rework `VerticalPodAutoscaler`.
+- CircleCI: Depend `push-to-app-collection` on `push-to-control-plane-catalog`. ([#165](https://github.com/giantswarm/event-exporter-app/pull/165))
 
 ### Removed
 
