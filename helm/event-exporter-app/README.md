@@ -1,6 +1,6 @@
 # event-exporter-app
 
-![Version: 0.14.0](https://img.shields.io/badge/Version-0.14.0-informational?style=flat-square) ![AppVersion: v0.11](https://img.shields.io/badge/AppVersion-v0.11-informational?style=flat-square)
+![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![AppVersion: v0.11](https://img.shields.io/badge/AppVersion-v0.11-informational?style=flat-square)
 
 The Event Exporter runs on management clusters to watch and act upon Kubernetes events.
 
