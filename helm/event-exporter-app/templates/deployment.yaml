@@ -20,7 +20,7 @@ spec:
       {{- end }}
       containers:
       - name: event-exporter
-        image: {{ .Values.registry.domain }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
+        image: {{ .Values.registry.domain }}/{{ .Values.image.name }}:{{ .Values.image.tag | default .Chart.AppVersion }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         {{- if .Values.securityContext }}
         securityContext: {{ toYaml .Values.securityContext | nindent 10 }}
