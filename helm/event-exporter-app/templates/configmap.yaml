@@ -1,183 +1,176 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: event-exporter-app
-  namespace: giantswarm
+  name: {{ include "event-exporter.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "event-exporter.labels" . | nindent 4 }}
 data:
   config.yaml: |
-    logLevel: debug
-
-    # We do not have webhooks configured on all Control Planes since they are
-    # part of an optional feature, which is sending Kubernetes Events to Slack.
-    # In case the webhook is not present Helm cannot template the configmap
-    # properly. Therefore we do not configure any matchers nor receivers if
-    # there is no webhook configured for a given Control Plane.
-
     route:
       routes:
+      # `cluster-operator` and `aws-operator` events for Grafana.
+      - match:
+        - kind: Cluster|AWSCluster|MachineDeployment|AWSMachineDeployment|G8sControlPlane|AWSControlPlane
+          receiver: grafana-firecracker
 
-        # We want to post kubernetes events from cluster-operator and aws-operator to grafana.
-        - match:
-          - kind: "Cluster|AWSCluster|MachineDeployment|AWSMachineDeployment|G8sControlPlane|AWSControlPlane"
-            receiver: "grafana-firecracker"
-        {{- if .Values.slack }}
-        # We want to send Workload Cluster upgrade events to Slack via the webhook
-        # receiver. Therefore we match for events attached to the CAPI Cluster
-        # CRs.
-        - match:
-          - kind: "Cluster"
-            reason: "ClusterIsUpdating"
-            receiver: "webhook-upgrade"
-        - match:
-          - kind: "Cluster"
-            reason: "Upgrading"
-            receiver: "webhook-upgrade"
-        # We want to send Workload Cluster upgrade announcement to Slack via the webhook
-        # receiver. Therefore we match for events attached to the CAPI Cluster
-        # CRs.
-        - match:
-          - kind: "Cluster"
-            reason: "ClusterUpgradeAnnouncement"
-            receiver: "webhook-announcement"
-        # We want to send Workload Cluster upgrade completed announcement to Slack via the webhook
-        # receiver. Therefore we match for events attached to the CAPI Cluster
-        # CRs.
-        - match:
-          - kind: "Cluster"
-            reason: "ClusterUpdated"
-            receiver: "webhook-upgrade-complete"
-        - match:
-          - kind: "Cluster"
-            reason: "Upgraded"
-            receiver: "webhook-upgrade-complete"
-        # We want to send Workload Cluster instance refresh starting events to Slack via the webhook
-        # receiver. Therefore we match for events attached to the AWSCluster
-        # CRs.
-        - match:
-          - kind: "AWSCluster"
-            reason: "InstanceRefreshIsStarting"
-            receiver: "webhook-instance-refresh-starting"
-        # We want to send Workload Cluster instance refresh for all master and worker nodes completed announcement to Slack via the webhook
-        # receiver. Therefore we match for events attached to the AWSCluster
-        # CRs.
-        - match:
-          - kind: "AWSCluster"
-            reason: "InstanceRefreshSuccessful"
-            receiver: "webhook-instance-refresh-complete"
-        # We want to send Workload Cluster instance refresh for all master and worker nodes cancelled announcement to Slack via the webhook
-        # receiver. Therefore we match for events attached to the AWSCluster
-        # CRs.
-        - match:
-          - kind: "AWSCluster"
-            reason: "InstanceRefreshCancelled"
-            receiver: "webhook-instance-refresh-cancelled"
-        # We want to send Workload Cluster instance refresh starting events to Slack via the webhook
-        # receiver. Therefore we match for events attached to the AWSControlplane
-        # CRs.
-        - match:
-          - kind: "AWSControlplane"
-            reason: "InstanceRefreshIsStarting"
-            receiver: "webhook-instance-refresh-starting"
-        # We want to send Workload Cluster instance refresh for all master nodes completed announcement to Slack via the webhook
-        # receiver. Therefore we match for events attached to the AWSControlplane
-        # CRs.
-        - match:
-          - kind: "AWSControlplane"
-            reason: "InstanceRefreshSuccessful"
-            receiver: "webhook-instance-refresh-complete"
-        # We want to send Workload Cluster instance refresh for all master nodes cancelled announcement to Slack via the webhook
-        # receiver. Therefore we match for events attached to the AWSControlplane
-        # CRs.
-        - match:
-          - kind: "AWSControlplane"
-            reason: "InstanceRefreshCancelled"
-            receiver: "webhook-instance-refresh-cancelled"
-        # We want to send Workload Cluster instance refresh starting events to Slack via the webhook
-        # receiver. Therefore we match for events attached to the AWSMachineDeployment
-        # CRs.
-        - match:
-          - kind: "AWSMachineDeployment"
-            reason: "InstanceRefreshIsStarting"
-            receiver: "webhook-instance-refresh-starting"
-        # We want to send Workload Cluster instance refresh for all worker nodes completed announcement to Slack via the webhook
-        # receiver. Therefore we match for events attached to the AWSMachineDeployment
-        # CRs.
-        - match:
-          - kind: "AWSMachineDeployment"
-            reason: "InstanceRefreshSuccessful"
-            receiver: "webhook-instance-refresh-complete"
-        # We want to send Workload Cluster instance refresh for all worker nodes cancelled announcement to Slack via the webhook
-        # receiver. Therefore we match for events attached to the AWSMachineDeployment
-        # CRs.
-        - match:
-          - kind: "AWSMachineDeployment"
-            reason: "InstanceRefreshCancelled"
-            receiver: "webhook-instance-refresh-cancelled"
-        {{- end }}
-
-        # We want to ignore all other events once we handled the events we are
-        # actually interested in. Therefore the drop rule has to be evaluated at
-        # the end of the tree.
-        - drop:
-          - namespace: "*"
-
-    receivers:
-
+      # Cluster events for Slack.
       {{- if .Values.slack }}
-      - name: "webhook-announcement"
-        webhook:
-          endpoint: "{{ .Values.slack.webhook }}"
-          layout:
-            text: "{{ "{{" }} .Message {{ "}}" }}"
-      - name: "webhook-upgrade"
-        webhook:
-          endpoint: "{{ .Values.slack.webhook }}"
-          layout:
-            text: "The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has begun. This upgrade will include replacing of nodes."
-      - name: "webhook-upgrade-complete"
-        webhook:
-          endpoint: "{{ .Values.slack.webhook }}"
-          layout:
-            text: "The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has completed and all nodes have been replaced."
-      - name: "webhook-instance-refresh-starting"
-        webhook:
-          endpoint: "{{ .Values.slack.webhook }}"
-          layout:
-            text: "The instance refresh of {{ "{{" }} .InvolvedObject.Kind {{ "}}" }} {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has started and will replace all nodes."
-      - name: "webhook-instance-refresh-complete"
-        webhook:
-          endpoint: "{{ .Values.slack.webhook }}"
-          layout:
-            text: "The instance refresh of {{ "{{" }} .InvolvedObject.Kind{{ "}}" }} {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has completed and all nodes have been replaced."
-      - name: "webhook-instance-refresh-cancelled"
-        webhook:
-          endpoint: "{{ .Values.slack.webhook }}"
-          layout:
-            text: "The instance refresh of {{ "{{" }} .InvolvedObject.Kind{{ "}}" }} {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} is cancelled."
+      # Cluster announcement.
+      - match:
+        - kind: Cluster
+          reason: ClusterUpgradeAnnouncement
+          receiver: webhook-announcement
+
+      # Cluster upgrade.
+      - match:
+        - kind: Cluster
+          reason: ClusterIsUpdating
+          receiver: webhook-upgrade
+      - match:
+        - kind: Cluster
+          reason: Upgrading
+          receiver: webhook-upgrade
+
+      # Cluster upgrade completed.
+      - match:
+        - kind: Cluster
+          reason: ClusterUpdated
+          receiver: webhook-upgrade-complete
+      - match:
+        - kind: Cluster
+          reason: Upgraded
+          receiver: webhook-upgrade-complete
+
+      # AWS cluster instance refresh starting.
+      - match:
+        - kind: AWSCluster
+          reason: InstanceRefreshIsStarting
+          receiver: webhook-instance-refresh-starting
+
+      # AWS cluster instance refresh completed.
+      - match:
+        - kind: AWSCluster
+          reason: InstanceRefreshSuccessful
+          receiver: webhook-instance-refresh-complete
+
+      # AWS cluster instance refresh cancelled.
+      - match:
+        - kind: AWSCluster
+          reason: InstanceRefreshCancelled
+          receiver: webhook-instance-refresh-cancelled
+
+      # AWS control plane instance refresh starting.
+      - match:
+        - kind: AWSControlplane
+          reason: InstanceRefreshIsStarting
+          receiver: webhook-instance-refresh-starting
+
+      # AWS control plane instance refresh completed.
+      - match:
+        - kind: AWSControlplane
+          reason: InstanceRefreshSuccessful
+          receiver: webhook-instance-refresh-complete
+
+      # AWS control plane instance refresh cancelled.
+      - match:
+        - kind: AWSControlplane
+          reason: InstanceRefreshCancelled
+          receiver: webhook-instance-refresh-cancelled
+
+      # AWS machine deployment instance refresh starting.
+      - match:
+        - kind: AWSMachineDeployment
+          reason: InstanceRefreshIsStarting
+          receiver: webhook-instance-refresh-starting
+
+      # AWS machine deployment instance refresh completed.
+      - match:
+        - kind: AWSMachineDeployment
+          reason: InstanceRefreshSuccessful
+          receiver: webhook-instance-refresh-complete
+
+      # AWS machine deployment instance refresh cancelled.
+      - match:
+        - kind: AWSMachineDeployment
+          reason: InstanceRefreshCancelled
+          receiver: webhook-instance-refresh-cancelled
       {{- end }}
 
-      - name: "grafana-firecracker"
-        webhook:
-          endpoint: "https://giantswarm.grafana.net/api/annotations/graphite"
-          headers:
-            Accept: application/json
-            Content-Type: application/json
-            Authorization: "{{ .Values.grafana.token }}"
-          layout:
-            what: "{{ "{{" }} .InvolvedObject.Kind {{ "}}" }} - {{ "{{" }} .Reason {{ "}}" }}"
-            tags: ["event",
-              "firecracker",
-              "{{ "{{" }} .Reason {{ "}}" }}",
-              "{{ "{{" }} .Type {{ "}}" }}",
-              "{{ "{{" }} .InvolvedObject.Kind {{ "}}" }}",
-              "{{ "{{" }} .InvolvedObject.Name {{ "}}" }}",
-              "{{ .Values.managementCluster.Name }}",
-              "{{ .Values.managementCluster.customer }}",
-              "{{ .Values.provider.kind }}",
-              {{- if .Values.testingEnvironment }}
-              "testing",
-              {{- else }}
-              "stable",
-              {{- end }}
-              "{{ "{{" }} .Source.Component {{ "}}" }}"]
-            data: "{{ "{{" }} .Message {{ "}}" }} for {{ "{{" }} .InvolvedObject.Kind {{ "}}" }} {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} reported by {{ "{{" }} .Source.Component {{ "}}" }}"
+      # Ignore other events.
+      - drop:
+        - namespace: "*"
+
+    receivers:
+    # Grafana receiver.
+    - name: grafana-firecracker
+      webhook:
+        endpoint: https://giantswarm.grafana.net/api/annotations/graphite
+        headers:
+          Authorization: {{ .Values.grafana.token }}
+          Content-Type: application/json
+          Accept: application/json
+        layout:
+          what: "{{ "{{" }} .InvolvedObject.Kind {{ "}}" }} - {{ "{{" }} .Reason {{ "}}" }}"
+          tags: [
+            "event",
+            "firecracker",
+            "{{ "{{" }} .Reason {{ "}}" }}",
+            "{{ "{{" }} .Type {{ "}}" }}",
+            "{{ "{{" }} .InvolvedObject.Kind {{ "}}" }}",
+            "{{ "{{" }} .InvolvedObject.Name {{ "}}" }}",
+            "{{ .Values.managementCluster.name }}",
+            "{{ .Values.managementCluster.customer }}",
+            "{{ .Values.provider.kind }}",
+            {{- if .Values.testingEnvironment }}
+            "testing",
+            {{- else }}
+            "stable",
+            {{- end }}
+            "{{ "{{" }} .Source.Component {{ "}}" }}"
+          ]
+          data: "{{ "{{" }} .Message {{ "}}" }} for {{ "{{" }} .InvolvedObject.Kind {{ "}}" }} {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} reported by {{ "{{" }} .Source.Component {{ "}}" }}"
+
+    # Slack receivers.
+    {{- if .Values.slack }}
+    # Announcement.
+    - name: webhook-announcement
+      webhook:
+        endpoint: {{ .Values.slack.webhook }}
+        layout:
+          text: "{{ "{{" }} .Message {{ "}}" }}"
+
+    # Upgrade.
+    - name: webhook-upgrade
+      webhook:
+        endpoint: {{ .Values.slack.webhook }}
+        layout:
+          text: "The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has begun. This upgrade will include replacing of nodes."
+
+    # Upgrade completed.
+    - name: webhook-upgrade-complete
+      webhook:
+        endpoint: {{ .Values.slack.webhook }}
+        layout:
+          text: "The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has completed and all nodes have been replaced."
+
+    # Instance refresh starting.
+    - name: webhook-instance-refresh-starting
+      webhook:
+        endpoint: {{ .Values.slack.webhook }}
+        layout:
+          text: "The instance refresh of {{ "{{" }} .InvolvedObject.Kind {{ "}}" }} {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has started and will replace all nodes."
+
+    # Instance refresh completed.
+    - name: webhook-instance-refresh-complete
+      webhook:
+        endpoint: {{ .Values.slack.webhook }}
+        layout:
+          text: "The instance refresh of {{ "{{" }} .InvolvedObject.Kind{{ "}}" }} {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has completed and all nodes have been replaced."
+
+    # Instance refresh cancelled.
+    - name: webhook-instance-refresh-cancelled
+      webhook:
+        endpoint: {{ .Values.slack.webhook }}
+        layout:
+          text: "The instance refresh of {{ "{{" }} .InvolvedObject.Kind{{ "}}" }} {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} is cancelled."
+    {{- end }}

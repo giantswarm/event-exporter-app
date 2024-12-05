@@ -2,19 +2,6 @@
     "$schema": "http://json-schema.org/schema#",
     "type": "object",
     "properties": {
-        "global": {
-            "type": "object",
-            "properties": {
-                "podSecurityStandards": {
-                    "type": "object",
-                    "properties": {
-                        "enforced": {
-                            "type": "boolean"
-                        }
-                    }
-                }
-            }
-        },
         "grafana": {
             "type": "object",
             "properties": {
@@ -30,9 +17,6 @@
                     "type": "string"
                 },
                 "pullPolicy": {
-                    "type": "string"
-                },
-                "registry": {
                     "type": "string"
                 },
                 "tag": {
@@ -51,32 +35,8 @@
                 }
             }
         },
-        "name": {
-            "type": "string"
-        },
         "podSecurityContext": {
-            "type": "object",
-            "properties": {
-                "seccompProfile": {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "project": {
-            "type": "object",
-            "properties": {
-                "branch": {
-                    "type": "string"
-                },
-                "commit": {
-                    "type": "string"
-                }
-            }
+            "type": "object"
         },
         "provider": {
             "type": "object",
@@ -98,26 +58,36 @@
             "type": "object",
             "properties": {
                 "allowPrivilegeEscalation": {
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                 },
-                "seccompProfile": {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "type": "string"
-                        }
-                    }
-                },
-                "capabilities":{
+                "capabilities": {
                     "type": "object",
                     "properties": {
                         "drop": {
                             "type": "array",
                             "items": {
                                 "type": "string"
-                            },
-                            "default": ["ALL"]
+                            }
+                        }
+                    }
+                },
+                "readOnlyRootFilesystem": {
+                    "type": "boolean"
+                },
+                "runAsGroup": {
+                    "type": "integer"
+                },
+                "runAsNonRoot": {
+                    "type": "boolean"
+                },
+                "runAsUser": {
+                    "type": "integer"
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string"
                         }
                     }
                 }

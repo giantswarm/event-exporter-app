@@ -11,6 +11,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Switching upstream image to new supported fork: github.com/resmoio/kubernetes-event-exporter
 
+## [1.0.0] - 2024-11-26
+
+### Changed
+
+- Chart: More love! ([#164](https://github.com/giantswarm/event-exporter-app/pull/164))
+  - Chart: Rework `Chart.yaml`.
+  - Chart: Rework `values.yaml`.
+  - Helpers: Rework `_helpers.tpl`.
+  - Templates: Rework `ConfigMap`.
+  - Templates: Rework `Deployment`.
+  - Templates: Rework `NetworkPolicy`.
+  - Templates: Rework RBAC.
+  - Templates: Rework `ServiceAccount`.
+  - Templates: Rework `VerticalPodAutoscaler`.
+- CircleCI: Depend `push-to-app-collection` on `push-to-control-plane-catalog`. ([#165](https://github.com/giantswarm/event-exporter-app/pull/165))
+- Chart: Update image to v0.11. ([#166](https://github.com/giantswarm/event-exporter-app/pull/166))
+
+### Removed
+
+- Chart: More love! ([#164](https://github.com/giantswarm/event-exporter-app/pull/164))
+  - Helpers: Remove `_resource.tpl`.
+  - Templates: Remove `PodSecurityPolicy`.
+  - Templates: Remove `PolicyException`.
+
+## [0.14.0] - 2024-11-22
+
+### Added
+
+- Repository: Some love. ❤️ ([#162](https://github.com/giantswarm/event-exporter-app/pull/162))
+  - ABS: Add `main.yaml`.
+  - ATS: Add `main.yaml` & tests.
+  - Renovate: Add `renovate.json5`.
+
+### Changed
+
+- Repository: Some love. ❤️ ([#162](https://github.com/giantswarm/event-exporter-app/pull/162))
+  - CircleCI: Rework `config.yml`.
+  - Docs: Rework `README.md`.
+  - ABS: Satisfy linter.
+  - ATS: Fix tests.
+
+### Removed
+
+- Repository: Some love. ❤️ ([#162](https://github.com/giantswarm/event-exporter-app/pull/162))
+  - Nancy: Remove `.nancy-ignore*`.
+
 ## [0.13.1] - 2024-08-14
 
 ### Fixed
@@ -179,7 +225,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.0] - 2020-09-23
 
-[Unreleased]: https://github.com/giantswarm/event-exporter-app/compare/v0.13.1...HEAD
+[Unreleased]: https://github.com/giantswarm/event-exporter-app/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/giantswarm/event-exporter-app/compare/v0.14.0...v1.0.0
+[0.14.0]: https://github.com/giantswarm/event-exporter-app/compare/v0.13.1...v0.14.0
 [0.13.1]: https://github.com/giantswarm/event-exporter-app/compare/v0.13.0...v0.13.1
 [0.13.0]: https://github.com/giantswarm/event-exporter-app/compare/v0.12.0...v0.13.0
 [0.12.0]: https://github.com/giantswarm/event-exporter-app/compare/v0.11.1...v0.12.0
