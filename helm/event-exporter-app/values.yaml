@@ -4,12 +4,12 @@ image:
   # The image name is different from the repo because we use some upstream
   # project under the hood.
   #
-  #     https://github.com/opsgenie/kubernetes-event-exporter
+  #     https://github.com/resmoio/kubernetes-event-exporter
   #
   name: giantswarm/kubernetes-event-exporter
   pullPolicy: IfNotPresent
   registry: gsoci.azurecr.io
-  tag: "0.9"
+  tag: "1.7"
 
 
 testingEnvironment: false

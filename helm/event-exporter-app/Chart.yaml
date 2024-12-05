@@ -1,7 +1,7 @@
 apiVersion: v1
 name: event-exporter-app
 version: [[ .Version ]]
-appVersion: v0.10
+appVersion: v1.7
 description: The event-exporter-app runs on Control Planes to watch and act upon Kubernetes events.
 home: https://github.com/opsgenie/kubernetes-event-exporter
 annotations:
