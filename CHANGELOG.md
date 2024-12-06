@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2024-12-06
+
 ### Changed
 
 - Switching upstream image to new supported fork: github.com/resmoio/kubernetes-event-exporter
@@ -225,7 +227,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.0] - 2020-09-23
 
-[Unreleased]: https://github.com/giantswarm/event-exporter-app/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/giantswarm/event-exporter-app/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/giantswarm/event-exporter-app/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/giantswarm/event-exporter-app/compare/v0.14.0...v1.0.0
 [0.14.0]: https://github.com/giantswarm/event-exporter-app/compare/v0.13.1...v0.14.0
 [0.13.1]: https://github.com/giantswarm/event-exporter-app/compare/v0.13.0...v0.13.1
