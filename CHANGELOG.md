@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Switching upstream image to new supported fork: github.com/resmoio/kubernetes-event-exporter
+
 ## [1.0.0] - 2024-11-26
 
 ### Changed

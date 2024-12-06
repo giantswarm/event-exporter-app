@@ -2,7 +2,7 @@ apiVersion: v2
 name: event-exporter-app
 description: The Event Exporter runs on management clusters to watch and act upon Kubernetes events.
 version: 1.0.0
-appVersion: v0.11
+appVersion: v1.7
 home: https://github.com/giantswarm/event-exporter-app
 icon: https://s.giantswarm.io/app-icons/k8s-initiator/1/dark.svg
 annotations:
