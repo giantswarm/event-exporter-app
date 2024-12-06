@@ -4,7 +4,7 @@
 
 The Event Exporter runs on management clusters to watch and act upon Kubernetes events. One use case might be to look for workload cluster upgrade events and emit Slack messages in various channels for awareness.
 
-The core component can be found at <https://github.com/opsgenie/kubernetes-event-exporter>.
+The core component can be found at <https://github.com/resmoio/kubernetes-event-exporter>.
 
 ### Event Matching
 
@@ -12,9 +12,9 @@ Events can be matched against by adding matching rules to the `configmap.yaml`. 
 
 ```
 - match:
-  - apiversion: cluster.x-k8s.io/v1alpha3
+  - apiversion: cluster.x-k8s.io/v1beta1
     kind: Cluster
-    reason: ClusterIsUpdating
+    reason: Upgrading
     receiver: webhook
 ```
 
@@ -41,10 +41,10 @@ kind: Event
 metadata:
   name: test
 message: Manually added event for testing.
-reason: ClusterIsUpdating
+reason: Upgrading
 type: Normal
 involvedObject:
-  apiVersion: cluster.x-k8s.io/v1alpha3
+  apiVersion: cluster.x-k8s.io/v1beta1
   kind: Cluster
   name: 7b3kj
   namespace: default
