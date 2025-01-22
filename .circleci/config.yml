@@ -16,9 +16,7 @@ workflows:
           persist_chart_archive: true
           filters:
             branches:
-              ignore:
-                - main
-                - master
+              only: /.*/
             tags:
               only: /^v.*/
 
@@ -28,9 +26,7 @@ workflows:
             - push-to-control-plane-catalog
           filters:
             branches:
-              ignore:
-                - main
-                - master
+              only: /.*/
             tags:
               only: /^v.*/
 

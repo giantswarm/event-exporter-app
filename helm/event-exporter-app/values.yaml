@@ -1,3 +1,5 @@
+serviceType: managed
+
 # -- Registry settings.
 registry:
   # -- Registry host.
