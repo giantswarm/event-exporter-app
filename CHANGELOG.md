@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Set apiversion `cluster.x-k8s.io/v1beta1` to matching rules.
+
 ## [2.0.0] - 2024-12-06
 
 ### Changed
