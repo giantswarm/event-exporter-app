@@ -18,26 +18,31 @@ data:
       # Cluster announcement.
       - match:
         - kind: Cluster
+          apiversion: cluster.x-k8s.io/v1beta1
           reason: ClusterUpgradeAnnouncement
           receiver: webhook-announcement
 
       # Cluster upgrade.
       - match:
         - kind: Cluster
+          apiversion: cluster.x-k8s.io/v1beta1
           reason: ClusterIsUpdating
           receiver: webhook-upgrade
       - match:
         - kind: Cluster
+          apiversion: cluster.x-k8s.io/v1beta1
           reason: Upgrading
           receiver: webhook-upgrade
 
       # Cluster upgrade completed.
       - match:
         - kind: Cluster
+          apiversion: cluster.x-k8s.io/v1beta1
           reason: ClusterUpdated
           receiver: webhook-upgrade-complete
       - match:
         - kind: Cluster
+          apiversion: cluster.x-k8s.io/v1beta1
           reason: Upgraded
           receiver: webhook-upgrade-complete
 
