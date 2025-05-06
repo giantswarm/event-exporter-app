@@ -32,6 +32,7 @@ data:
         - kind: Cluster
           apiversion: cluster.x-k8s.io/v1beta1
           reason: Upgrading
+          component: "cluster-api-events-controller"
           receiver: webhook-upgrade
 
       # Cluster upgrade completed.
@@ -44,6 +45,7 @@ data:
         - kind: Cluster
           apiversion: cluster.x-k8s.io/v1beta1
           reason: Upgraded
+          component: "cluster-api-events-controller"
           receiver: webhook-upgrade-complete
 
       # AWS cluster instance refresh starting.
