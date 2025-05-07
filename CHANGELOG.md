@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.0] - 2025-05-07
+
 ### Changed
 
 - Include source.component from the CAPI events (cluster-api-events-controller).
@@ -237,7 +239,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.0] - 2020-09-23
 
-[Unreleased]: https://github.com/giantswarm/event-exporter-app/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/giantswarm/event-exporter-app/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/giantswarm/event-exporter-app/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/giantswarm/event-exporter-app/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/giantswarm/event-exporter-app/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/giantswarm/event-exporter-app/compare/v0.14.0...v1.0.0
