@@ -62,8 +62,8 @@ data:
     # Slack sink.
     - name: slack-upgrade
       slack:
-        token: {{ .Values.slack.token }}
-        channel: {{ .Values.slack.channel }}
+        token: "{{ .Values.slack.token }}"
+        channel: "{{ .Values.slack.channel }}"
         threadKey: "{{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }}"
         completionCondition: '{{ "{{" }} if eq .Reason "Upgraded" }}true{{ "{{" }} end }}'
         completionEmoji: "white_check_mark"
