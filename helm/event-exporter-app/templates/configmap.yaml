@@ -6,101 +6,36 @@ metadata:
   labels: {{ include "event-exporter.labels" . | nindent 4 }}
 data:
   config.yaml: |
+    {{- if .Values.watchReasons }}
+    watchReasons:
+      {{- toYaml .Values.watchReasons | nindent 6 }}
+    {{- end }}
     route:
       routes:
-      # `cluster-operator` and `aws-operator` events for Grafana.
-      - match:
-        - kind: Cluster|AWSCluster|MachineDeployment|AWSMachineDeployment|G8sControlPlane|AWSControlPlane
-          receiver: grafana-firecracker
-
       # Cluster events for Slack.
-      {{- if .Values.slack }}
-      # Cluster announcement.
-      - match:
-        - kind: Cluster
-          apiversion: cluster.x-k8s.io/v1beta1
-          reason: ClusterUpgradeAnnouncement
-          receiver: webhook-announcement
-
-      # Cluster upgrade.
-      - match:
-        - kind: Cluster
-          apiversion: cluster.x-k8s.io/v1beta1
-          reason: ClusterIsUpdating
-          receiver: webhook-upgrade
+      {{- if .Values.slack.webhook }}
+      # Webhook sink.
       - match:
         - kind: Cluster
           apiversion: cluster.x-k8s.io/v1beta1
           reason: Upgrading
           component: "cluster-api-events-controller"
           receiver: webhook-upgrade
-
-      # Cluster upgrade completed.
-      - match:
-        - kind: Cluster
-          apiversion: cluster.x-k8s.io/v1beta1
-          reason: ClusterUpdated
-          receiver: webhook-upgrade-complete
       - match:
         - kind: Cluster
           apiversion: cluster.x-k8s.io/v1beta1
           reason: Upgraded
           component: "cluster-api-events-controller"
           receiver: webhook-upgrade-complete
-
-      # AWS cluster instance refresh starting.
+      {{- end }}
+      {{- if .Values.slack.token }}
+      # Slack sink.
       - match:
-        - kind: AWSCluster
-          reason: InstanceRefreshIsStarting
-          receiver: webhook-instance-refresh-starting
-
-      # AWS cluster instance refresh completed.
-      - match:
-        - kind: AWSCluster
-          reason: InstanceRefreshSuccessful
-          receiver: webhook-instance-refresh-complete
-
-      # AWS cluster instance refresh cancelled.
-      - match:
-        - kind: AWSCluster
-          reason: InstanceRefreshCancelled
-          receiver: webhook-instance-refresh-cancelled
-
-      # AWS control plane instance refresh starting.
-      - match:
-        - kind: AWSControlplane
-          reason: InstanceRefreshIsStarting
-          receiver: webhook-instance-refresh-starting
-
-      # AWS control plane instance refresh completed.
-      - match:
-        - kind: AWSControlplane
-          reason: InstanceRefreshSuccessful
-          receiver: webhook-instance-refresh-complete
-
-      # AWS control plane instance refresh cancelled.
-      - match:
-        - kind: AWSControlplane
-          reason: InstanceRefreshCancelled
-          receiver: webhook-instance-refresh-cancelled
-
-      # AWS machine deployment instance refresh starting.
-      - match:
-        - kind: AWSMachineDeployment
-          reason: InstanceRefreshIsStarting
-          receiver: webhook-instance-refresh-starting
-
-      # AWS machine deployment instance refresh completed.
-      - match:
-        - kind: AWSMachineDeployment
-          reason: InstanceRefreshSuccessful
-          receiver: webhook-instance-refresh-complete
-
-      # AWS machine deployment instance refresh cancelled.
-      - match:
-        - kind: AWSMachineDeployment
-          reason: InstanceRefreshCancelled
-          receiver: webhook-instance-refresh-cancelled
+        - kind: Cluster
+          apiversion: cluster.x-k8s.io/v1beta1
+          reason: Upgrading|Upgraded
+          component: "cluster-api-events-controller"
+          receiver: slack-upgrade
       {{- end }}
 
       # Ignore other events.
@@ -108,45 +43,8 @@ data:
         - namespace: "*"
 
     receivers:
-    # Grafana receiver.
-    - name: grafana-firecracker
-      webhook:
-        endpoint: https://giantswarm.grafana.net/api/annotations/graphite
-        headers:
-          Authorization: {{ .Values.grafana.token }}
-          Content-Type: application/json
-          Accept: application/json
-        layout:
-          what: "{{ "{{" }} .InvolvedObject.Kind {{ "}}" }} - {{ "{{" }} .Reason {{ "}}" }}"
-          tags: [
-            "event",
-            "firecracker",
-            "{{ "{{" }} .Reason {{ "}}" }}",
-            "{{ "{{" }} .Type {{ "}}" }}",
-            "{{ "{{" }} .InvolvedObject.Kind {{ "}}" }}",
-            "{{ "{{" }} .InvolvedObject.Name {{ "}}" }}",
-            "{{ .Values.managementCluster.name }}",
-            "{{ .Values.managementCluster.customer }}",
-            "{{ .Values.provider.kind }}",
-            {{- if .Values.testingEnvironment }}
-            "testing",
-            {{- else }}
-            "stable",
-            {{- end }}
-            "{{ "{{" }} .Source.Component {{ "}}" }}"
-          ]
-          data: "{{ "{{" }} .Message {{ "}}" }} for {{ "{{" }} .InvolvedObject.Kind {{ "}}" }} {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} reported by {{ "{{" }} .Source.Component {{ "}}" }}"
-
-    # Slack receivers.
-    {{- if .Values.slack }}
-    # Announcement.
-    - name: webhook-announcement
-      webhook:
-        endpoint: {{ .Values.slack.webhook }}
-        layout:
-          text: "{{ "{{" }} .Message {{ "}}" }}"
-
-    # Upgrade.
+    {{- if .Values.slack.webhook }}
+    # Webhook sink.
     - name: webhook-upgrade
       webhook:
         endpoint: {{ .Values.slack.webhook }}
@@ -159,25 +57,20 @@ data:
         endpoint: {{ .Values.slack.webhook }}
         layout:
           text: "The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has completed and all nodes have been replaced."
-
-    # Instance refresh starting.
-    - name: webhook-instance-refresh-starting
-      webhook:
-        endpoint: {{ .Values.slack.webhook }}
-        layout:
-          text: "The instance refresh of {{ "{{" }} .InvolvedObject.Kind {{ "}}" }} {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has started and will replace all nodes."
-
-    # Instance refresh completed.
-    - name: webhook-instance-refresh-complete
-      webhook:
-        endpoint: {{ .Values.slack.webhook }}
-        layout:
-          text: "The instance refresh of {{ "{{" }} .InvolvedObject.Kind{{ "}}" }} {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has completed and all nodes have been replaced."
-
-    # Instance refresh cancelled.
-    - name: webhook-instance-refresh-cancelled
-      webhook:
-        endpoint: {{ .Values.slack.webhook }}
-        layout:
-          text: "The instance refresh of {{ "{{" }} .InvolvedObject.Kind{{ "}}" }} {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} is cancelled."
+    {{- end }}
+    {{- if .Values.slack.token }}
+    # Slack sink.
+    - name: slack-upgrade
+      slack:
+        token: {{ .Values.slack.token }}
+        channel: {{ .Values.slack.channel }}
+        threadKey: "{{ "{{" }} .InvolvedObject.Name {{ "}}" }}"
+        completionCondition: '{{ "{{" }} if eq .Reason "Upgraded" }}true{{ "{{" }} end }}'
+        completionEmoji: "white_check_mark"
+        message: |
+          {{ "{{" }} if eq .Reason "Upgrading" -}}
+          The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace }}/{{ "{{" }} .InvolvedObject.Name }} on {{ .Values.managementCluster.name }} has begun. This upgrade will include replacing of nodes.
+          {{- "{{" }} else if eq .Reason "Upgraded" -}}
+          The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace }}/{{ "{{" }} .InvolvedObject.Name }} on {{ .Values.managementCluster.name }} has completed and all nodes have been replaced.
+          {{- "{{" }} end }}
     {{- end }}

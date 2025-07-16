@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Switching upstream image to `github.com/giantswarm/kubernetes-event-exporter`.
+- Refactor Helm values for `watchReasons`.
+- Refactor Helm values for image `registry`.
+- Fix `podSecurityContext` in `values.yaml` and `values.schema.json`.
+- Add descriptions to all properties in `values.schema.json`.
+- Escape Go templates in `configmap.yaml` for the Slack receiver.
+- Deprecate `slack.webhook` in favor of `slack.token` and `slack.channel`.
+
 ## [2.2.0] - 2025-05-07
 
 ### Changed
