@@ -64,7 +64,7 @@ data:
       slack:
         token: {{ .Values.slack.token }}
         channel: {{ .Values.slack.channel }}
-        threadKey: "{{ "{{" }} .InvolvedObject.Name {{ "}}" }}"
+        threadKey: "{{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }}"
         completionCondition: '{{ "{{" }} if eq .Reason "Upgraded" }}true{{ "{{" }} end }}'
         completionEmoji: "white_check_mark"
         message: |
