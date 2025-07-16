@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  architect: giantswarm/architect@5.13.1
+  architect: giantswarm/architect@6.2.1
 
 workflows:
   build:
@@ -31,32 +31,6 @@ workflows:
               ignore:
                 - main
                 - master
-            tags:
-              only: /^v.*/
-
-      - architect/push-to-app-collection:
-          name: push-to-aws-app-collection
-          context: architect
-          app_name: event-exporter-app
-          app_collection_repo: aws-app-collection
-          requires:
-            - push-to-control-plane-catalog
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v.*/
-
-      - architect/push-to-app-collection:
-          name: push-to-azure-app-collection
-          context: architect
-          app_name: event-exporter-app
-          app_collection_repo: azure-app-collection
-          requires:
-            - push-to-control-plane-catalog
-          filters:
-            branches:
-              ignore: /.*/
             tags:
               only: /^v.*/
 
