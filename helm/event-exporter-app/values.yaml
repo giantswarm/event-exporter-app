@@ -1,8 +1,3 @@
-# -- Registry settings.
-registry:
-  # -- Registry host.
-  domain: gsoci.azurecr.io
-
 # -- Image settings.
 image:
   # -- Image repository.
@@ -11,9 +6,21 @@ image:
   tag: ""
   # -- Image pull policy.
   pullPolicy: IfNotPresent
+  # -- Overrides the image registry.
+  registry: "gsoci.azurecr.io"
+
+# -- Reasons for events to be exported.
+watchReasons:
+  - Upgrading
+  - Upgraded
 
 # -- Pod Security Context.
-podSecurityContext: {}
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  seccompProfile:
+    type: RuntimeDefault
 
 # -- Container Security Context.
 securityContext:
@@ -45,8 +52,12 @@ provider:
 
 # -- Slack settings.
 slack:
-  # -- Slack webhook URL.
+  # -- DEPRECATED: Slack webhook URL. Will be removed in a future release. Please use token and channel instead.
   webhook: ""
+  # -- Slack channel to post to.
+  channel: ""
+  # -- Slack token.
+  token: ""
 
 # -- Grafana settings.
 grafana:
