@@ -69,7 +69,7 @@ data:
         completionEmoji: "white_check_mark"
         message: |
           {{ "{{" }} if eq .Reason "Upgrading" -}}
-          The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace }}/{{ "{{" }} .InvolvedObject.Name }} on {{ .Values.managementCluster.name }} has begun. This upgrade will include replacing of nodes.
+          The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace }}/{{ "{{" }} .InvolvedObject.Name }} on {{ .Values.managementCluster.name }} {{ "{{" }} .Message }} has begun. This upgrade will include replacing of nodes.
           {{- "{{" }} else if eq .Reason "Upgraded" -}}
           The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace }}/{{ "{{" }} .InvolvedObject.Name }} on {{ .Values.managementCluster.name }} has completed and all nodes have been replaced.
           {{- "{{" }} end }}
