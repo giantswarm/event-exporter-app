@@ -27,13 +27,19 @@ data:
           reason: Upgraded
           component: "cluster-api-events-controller"
           receiver: webhook-upgrade-complete
+      - match:
+        - kind: Cluster
+          apiversion: cluster.x-k8s.io/v1beta1
+          reason: UpgradedControlPlane
+          component: "cluster-api-events-controller"
+          receiver: webhook-upgrade-progress
       {{- end }}
       {{- if .Values.slack.token }}
       # Slack sink.
       - match:
         - kind: Cluster
           apiversion: cluster.x-k8s.io/v1beta1
-          reason: Upgrading|Upgraded
+          reason: Upgrading|Upgraded|UpgradedControlPlane
           component: "cluster-api-events-controller"
           receiver: slack-upgrade
       {{- end }}
@@ -57,6 +63,13 @@ data:
         endpoint: {{ .Values.slack.webhook }}
         layout:
           text: "The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has completed and all nodes have been replaced."
+
+    # Upgrade progress.
+    - name: webhook-upgrade-progress
+      webhook:
+        endpoint: {{ .Values.slack.webhook }}
+        layout:
+          text: "Control plane upgrade completed for {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }}"
     {{- end }}
     {{- if .Values.slack.token }}
     # Slack sink.
@@ -72,5 +85,7 @@ data:
           The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace }}/{{ "{{" }} .InvolvedObject.Name }} on {{ .Values.managementCluster.name }} {{ "{{" }} .Message }} has begun. This upgrade will include replacing of nodes.
           {{- "{{" }} else if eq .Reason "Upgraded" -}}
           The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace }}/{{ "{{" }} .InvolvedObject.Name }} on {{ .Values.managementCluster.name }} has completed and all nodes have been replaced.
+          {{- "{{" }} else if eq .Reason "UpgradedControlPlane" -}}
+          :white_check_mark: Control plane upgrade completed for {{ "{{" }} .InvolvedObject.Namespace }}/{{ "{{" }} .InvolvedObject.Name }} on {{ .Values.managementCluster.name }}
           {{- "{{" }} end }}
     {{- end }}
