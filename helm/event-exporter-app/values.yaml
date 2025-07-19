@@ -13,6 +13,7 @@ image:
 watchReasons:
   - Upgrading
   - Upgraded
+  - UpgradedControlPlane
 
 # -- Pod Security Context.
 podSecurityContext:
