@@ -65,6 +65,23 @@ grafana:
   # -- Grafana authentication token.
   token: ""
 
+# -- Environment variables for the event exporter container.
+env: []
+# Example for proxy configuration:
+# env:
+#   - name: NO_PROXY
+#     value: "172.31.0.1,.cluster.local.,.cluster.local,.svc"
+#   - name: HTTPS_PROXY
+#     valueFrom:
+#       secretKeyRef:
+#         name: proxysocks-on-avocet
+#         key: proxyUrl
+#   - name: HTTP_PROXY
+#     valueFrom:
+#       secretKeyRef:
+#         name: proxysocks-on-avocet
+#         key: proxyUrl
+
 # -- Vertical Pod Autoscaler settings.
 verticalPodAutoscaler:
   # -- If Vertical Pod Autoscaler is enabled.

@@ -25,6 +25,10 @@ spec:
         {{- if .Values.securityContext }}
         securityContext: {{ toYaml .Values.securityContext | nindent 10 }}
         {{- end }}
+        {{- with .Values.env }}
+        env:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
         args:
         - --conf
         - /data/config.yaml
