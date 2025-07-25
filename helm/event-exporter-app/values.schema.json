@@ -2,6 +2,72 @@
     "$schema": "http://json-schema.org/schema#",
     "type": "object",
     "properties": {
+        "env": {
+            "description": "Environment variables for the event exporter container.",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "description": "Name of the environment variable.",
+                        "type": "string"
+                    },
+                    "value": {
+                        "description": "Value of the environment variable.",
+                        "type": "string"
+                    },
+                    "valueFrom": {
+                        "description": "Source for the environment variable's value.",
+                        "type": "object",
+                        "properties": {
+                            "secretKeyRef": {
+                                "description": "Selects a key of a secret in the pod's namespace.",
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "description": "Name of the secret.",
+                                        "type": "string"
+                                    },
+                                    "key": {
+                                        "description": "The key of the secret to select from.",
+                                        "type": "string"
+                                    },
+                                    "optional": {
+                                        "description": "Specify whether the secret or its key must be defined.",
+                                        "type": "boolean"
+                                    }
+                                },
+                                "required": ["name", "key"]
+                            },
+                            "configMapKeyRef": {
+                                "description": "Selects a key of a ConfigMap.",
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "description": "Name of the ConfigMap.",
+                                        "type": "string"
+                                    },
+                                    "key": {
+                                        "description": "The key of the ConfigMap to select from.",
+                                        "type": "string"
+                                    },
+                                    "optional": {
+                                        "description": "Specify whether the ConfigMap or its key must be defined.",
+                                        "type": "boolean"
+                                    }
+                                },
+                                "required": ["name", "key"]
+                            }
+                        }
+                    }
+                },
+                "required": ["name"],
+                "oneOf": [
+                    {"required": ["value"]},
+                    {"required": ["valueFrom"]}
+                ]
+            }
+        },
         "grafana": {
             "description": "Grafana settings.",
             "type": "object",
