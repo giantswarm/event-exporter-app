@@ -1,6 +1,6 @@
 # event-exporter-app
 
-![Version: 2.2.0](https://img.shields.io/badge/Version-2.2.0-informational?style=flat-square) ![AppVersion: 2.1.1](https://img.shields.io/badge/AppVersion-2.1.1-informational?style=flat-square)
+![Version: 3.2.0](https://img.shields.io/badge/Version-3.2.0-informational?style=flat-square) ![AppVersion: 2.1.1](https://img.shields.io/badge/AppVersion-2.1.1-informational?style=flat-square)
 
 The Event Exporter runs on management clusters to watch and act upon Kubernetes events.
 
@@ -10,6 +10,7 @@ The Event Exporter runs on management clusters to watch and act upon Kubernetes 
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| env | list | `[]` | Environment variables for the event exporter container. |
 | grafana | object | `{"token":""}` | Grafana settings. |
 | grafana.token | string | `""` | Grafana authentication token. |
 | image | object | `{"name":"giantswarm/kubernetes-event-exporter","pullPolicy":"IfNotPresent","registry":"gsoci.azurecr.io","tag":""}` | Image settings. |
@@ -31,4 +32,4 @@ The Event Exporter runs on management clusters to watch and act upon Kubernetes 
 | testingEnvironment | bool | `false` | If the management cluster the event exporter is running in is a testing environment. |
 | verticalPodAutoscaler | object | `{"enabled":true}` | Vertical Pod Autoscaler settings. |
 | verticalPodAutoscaler.enabled | bool | `true` | If Vertical Pod Autoscaler is enabled. |
-| watchReasons | list | `["Upgrading","Upgraded"]` | Reasons for events to be exported. |
+| watchReasons | list | `["Upgrading","Upgraded","UpgradedControlPlane"]` | Reasons for events to be exported. |
