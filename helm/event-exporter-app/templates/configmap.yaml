@@ -86,6 +86,6 @@ data:
           {{- "{{" }} else if eq .Reason "Upgraded" -}}
           The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace }}/{{ "{{" }} .InvolvedObject.Name }} on {{ .Values.managementCluster.name }} has completed and all nodes have been replaced.
           {{- "{{" }} else if eq .Reason "UpgradedControlPlane" -}}
-          :white_check_mark: Control plane upgrade completed for {{ "{{" }} .InvolvedObject.Namespace }}/{{ "{{" }} .InvolvedObject.Name }} on {{ .Values.managementCluster.name }}
+          :white_check_mark: Control plane upgrade completed for {{ "{{" }} .InvolvedObject.Namespace }}/{{ "{{" }} .InvolvedObject.Name }} on {{ .Values.managementCluster.name }}.
           {{- "{{" }} end }}
     {{- end }}
