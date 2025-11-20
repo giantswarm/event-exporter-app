@@ -213,6 +213,16 @@
                     "description": "Slack token.",
                     "type": "string"
                 },
+                "cache": {
+                    "description": "Cache settings for Slack threads.",
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "description": "Enable persistence for Slack threads.",
+                            "type": "boolean"
+                        }
+                    }
+                },
                 "webhook": {
                     "description": "DEPRECATED: Slack webhook URL. Will be removed in a future release.",
                     "type": "string"

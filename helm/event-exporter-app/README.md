@@ -25,8 +25,9 @@ The Event Exporter runs on management clusters to watch and act upon Kubernetes 
 | provider | object | `{"kind":""}` | Provider of the management cluster the event exporter is running in. |
 | provider.kind | string | `""` | Provider kind. |
 | securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000,"seccompProfile":{"type":"RuntimeDefault"}}` | Container Security Context. |
-| slack | object | `{"cacheEnabled":true,"channel":"","token":"","webhook":""}` | Slack settings. |
-| slack.cacheEnabled | bool | `true` | Enable persistence for Slack threads. |
+| slack | object | `{"cache":{"enabled":true},"channel":"","token":"","webhook":""}` | Slack settings. |
+| slack.cache | object | `{"enabled":true}` | Cache settings for Slack threads. |
+| slack.cache.enabled | bool | `true` | Enable persistence for Slack threads. |
 | slack.channel | string | `""` | Slack channel to post to. |
 | slack.token | string | `""` | Slack token. |
 | slack.webhook | string | `""` | DEPRECATED: Slack webhook URL. Will be removed in a future release. Please use token and channel instead. |

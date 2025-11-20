@@ -77,7 +77,7 @@ data:
       slack:
         token: "{{ .Values.slack.token }}"
         channel: "{{ .Values.slack.channel }}"
-        {{- if .Values.slack.cacheEnabled }}
+        {{- if .Values.slack.cache.enabled }}
         cache:
           name: {{ include "event-exporter.fullname" . }}-thread-cache
           namespace: {{ .Release.Namespace }}
