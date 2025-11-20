@@ -29,10 +29,14 @@ rules:
   resources:
   - events
   - pods
+  - configmaps
   verbs:
   - get
   - list
   - watch
+  - create
+  - update
+  - patch
 - apiGroups:
   - apps
   resources:

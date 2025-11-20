@@ -59,6 +59,10 @@ slack:
   channel: ""
   # -- Slack token.
   token: ""
+  # -- Cache settings for Slack threads.
+  cache:
+    # -- Enable persistence for Slack threads.
+    enabled: true
 
 # -- Grafana settings.
 grafana:

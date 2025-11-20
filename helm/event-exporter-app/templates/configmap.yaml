@@ -77,6 +77,11 @@ data:
       slack:
         token: "{{ .Values.slack.token }}"
         channel: "{{ .Values.slack.channel }}"
+        {{- if .Values.slack.cache.enabled }}
+        cache:
+          name: {{ include "event-exporter.fullname" . }}-thread-cache
+          namespace: {{ .Release.Namespace }}
+        {{- end }}
         threadKey: "{{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }}"
         completionCondition: '{{ "{{" }} if eq .Reason "Upgraded" }}true{{ "{{" }} end }}'
         completionEmoji: "white_check_mark"
