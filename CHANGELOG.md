@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Chart: Update kubernetes-event-exporter version to 2.2.0.
+- Chart: Enable caching for Slack threads.
+- Chart: Add RBAC permissions for configmaps.
+
 ## [3.3.1] - 2025-09-17
 
 ### Changed
