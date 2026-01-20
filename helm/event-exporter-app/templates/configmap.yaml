@@ -17,19 +17,25 @@ data:
       # Webhook sink.
       - match:
         - kind: Cluster
-          apiversion: cluster.x-k8s.io/v1beta1
-          reason: Upgrading
+          apiversion: cluster.x-k8s.io/v1beta2
+          reason: UpgradingWithNodeRoll
           component: "cluster-api-events-controller"
-          receiver: webhook-upgrade
+          receiver: webhook-upgrade-with-node-roll
       - match:
         - kind: Cluster
-          apiversion: cluster.x-k8s.io/v1beta1
+          apiversion: cluster.x-k8s.io/v1beta2
+          reason: UpgradingWithoutNodeRoll
+          component: "cluster-api-events-controller"
+          receiver: webhook-upgrade-without-node-roll
+      - match:
+        - kind: Cluster
+          apiversion: cluster.x-k8s.io/v1beta2
           reason: Upgraded
           component: "cluster-api-events-controller"
           receiver: webhook-upgrade-complete
       - match:
         - kind: Cluster
-          apiversion: cluster.x-k8s.io/v1beta1
+          apiversion: cluster.x-k8s.io/v1beta2
           reason: UpgradedControlPlane
           component: "cluster-api-events-controller"
           receiver: webhook-upgrade-progress
@@ -38,8 +44,8 @@ data:
       # Slack sink.
       - match:
         - kind: Cluster
-          apiversion: cluster.x-k8s.io/v1beta1
-          reason: Upgrading|Upgraded|UpgradedControlPlane
+          apiversion: cluster.x-k8s.io/v1beta2
+          reason: UpgradingWithNodeRoll|UpgradingWithoutNodeRoll|Upgraded|UpgradedControlPlane
           component: "cluster-api-events-controller"
           receiver: slack-upgrade
       {{- end }}
@@ -50,19 +56,26 @@ data:
 
     receivers:
     {{- if .Values.slack.webhook }}
-    # Webhook sink.
-    - name: webhook-upgrade
+    # Webhook sink - upgrade with node roll (minor/major upgrades).
+    - name: webhook-upgrade-with-node-roll
       webhook:
         endpoint: {{ .Values.slack.webhook }}
         layout:
-          text: "The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has begun. This upgrade will include replacing of nodes."
+          text: "The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} {{ "{{" }} .Message {{ "}}" }} has begun. This upgrade will replace nodes."
+
+    # Webhook sink - upgrade without node roll (patch upgrades).
+    - name: webhook-upgrade-without-node-roll
+      webhook:
+        endpoint: {{ .Values.slack.webhook }}
+        layout:
+          text: "The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} {{ "{{" }} .Message {{ "}}" }} has begun. This upgrade will not replace nodes."
 
     # Upgrade completed.
     - name: webhook-upgrade-complete
       webhook:
         endpoint: {{ .Values.slack.webhook }}
         layout:
-          text: "The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has completed and all nodes have been replaced."
+          text: "The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }} on {{ .Values.managementCluster.name }} has completed {{ "{{" }} .Message {{ "}}" }}."
 
     # Upgrade progress.
     - name: webhook-upgrade-progress
@@ -86,10 +99,12 @@ data:
         completionCondition: '{{ "{{" }} if eq .Reason "Upgraded" }}true{{ "{{" }} end }}'
         completionEmoji: "white_check_mark"
         message: |
-          {{ "{{" }} if eq .Reason "Upgrading" -}}
-          The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace }}/{{ "{{" }} .InvolvedObject.Name }} on {{ .Values.managementCluster.name }} {{ "{{" }} .Message }} has begun. This upgrade will include replacing of nodes.
+          {{ "{{" }} if eq .Reason "UpgradingWithNodeRoll" -}}
+          The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace }}/{{ "{{" }} .InvolvedObject.Name }} on {{ .Values.managementCluster.name }} {{ "{{" }} .Message }} has begun. This upgrade will replace nodes.
+          {{- "{{" }} else if eq .Reason "UpgradingWithoutNodeRoll" -}}
+          The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace }}/{{ "{{" }} .InvolvedObject.Name }} on {{ .Values.managementCluster.name }} {{ "{{" }} .Message }} has begun. This upgrade will not replace nodes.
           {{- "{{" }} else if eq .Reason "Upgraded" -}}
-          The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace }}/{{ "{{" }} .InvolvedObject.Name }} on {{ .Values.managementCluster.name }} has completed and all nodes have been replaced.
+          The cluster upgrade of {{ "{{" }} .InvolvedObject.Namespace }}/{{ "{{" }} .InvolvedObject.Name }} on {{ .Values.managementCluster.name }} has completed {{ "{{" }} .Message }}.
           {{- "{{" }} else if eq .Reason "UpgradedControlPlane" -}}
           :white_check_mark: Control plane upgrade completed for {{ "{{" }} .InvolvedObject.Namespace }}/{{ "{{" }} .InvolvedObject.Name }} on {{ .Values.managementCluster.name }}.
           {{- "{{" }} end }}

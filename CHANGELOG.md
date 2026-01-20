@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Updated to handle new upgrade event types from cluster-api-events:
+  - `UpgradingWithNodeRoll`: Shows "This upgrade will replace nodes."
+  - `UpgradingWithoutNodeRoll`: Shows "This upgrade will not replace nodes."
+- Updated Cluster API version from v1beta1 to v1beta2.
+
 ## [3.4.0] - 2025-11-20
 
 ### Changed
