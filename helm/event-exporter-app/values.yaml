@@ -11,7 +11,8 @@ image:
 
 # -- Reasons for events to be exported.
 watchReasons:
-  - Upgrading
+  - UpgradingWithNodeRoll
+  - UpgradingWithoutNodeRoll
   - Upgraded
   - UpgradedControlPlane
 
