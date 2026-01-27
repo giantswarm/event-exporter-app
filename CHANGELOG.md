@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Use inline code formatting for cluster/namespace and management cluster names in Slack messages.
+
 ## [3.5.0] - 2026-01-21
 
 ### Changed
