@@ -34,28 +34,3 @@ workflows:
             tags:
               only: /^v.*/
 
-      - architect/push-to-app-collection:
-          name: push-to-capa-app-collection
-          context: architect
-          app_name: event-exporter-app
-          app_collection_repo: capa-app-collection
-          requires:
-            - push-to-control-plane-catalog
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v.*/
-
-      - architect/push-to-app-collection:
-          name: push-to-capz-app-collection
-          context: architect
-          app_name: event-exporter-app
-          app_collection_repo: capz-app-collection
-          requires:
-            - push-to-control-plane-catalog
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v.*/
