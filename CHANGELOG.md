@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Include target release version in Slack thread key so each upgrade gets its own thread instead of replying to a previous upgrade's thread.
+
 ## [3.6.0] - 2026-01-28
 
 ### Changed
