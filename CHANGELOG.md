@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.7.0] - 2026-03-17
+
 ### Fixed
 
 - Include target release version from Event annotation (`giantswarm.io/target-version`) in Slack thread key so each upgrade gets its own thread instead of replying to a previous upgrade's thread. Requires cluster-api-events v1.3.0+.
@@ -302,7 +304,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.0] - 2020-09-23
 
-[Unreleased]: https://github.com/giantswarm/event-exporter-app/compare/v3.6.0...HEAD
+[Unreleased]: https://github.com/giantswarm/event-exporter-app/compare/v3.7.0...HEAD
+[3.7.0]: https://github.com/giantswarm/event-exporter-app/compare/v3.6.0...v3.7.0
 [3.6.0]: https://github.com/giantswarm/event-exporter-app/compare/v3.5.0...v3.6.0
 [3.5.0]: https://github.com/giantswarm/event-exporter-app/compare/v3.4.0...v3.5.0
 [3.4.0]: https://github.com/giantswarm/event-exporter-app/compare/v3.3.1...v3.4.0
