@@ -95,7 +95,7 @@ data:
           name: {{ include "event-exporter.fullname" . }}-thread-cache
           namespace: {{ .Release.Namespace }}
         {{- end }}
-        threadKey: "{{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }}/{{ "{{" }} index .InvolvedObject.Annotations \"giantswarm.io/last-known-cluster-upgrade-version\" {{ "}}" }}"
+        threadKey: '{{ "{{" }} .InvolvedObject.Namespace {{ "}}" }}/{{ "{{" }} .InvolvedObject.Name {{ "}}" }}/{{ "{{" }} index .Annotations "giantswarm.io/target-version" {{ "}}" }}'
         completionCondition: '{{ "{{" }} if eq .Reason "Upgraded" }}true{{ "{{" }} end }}'
         completionEmoji: "white_check_mark"
         message: |

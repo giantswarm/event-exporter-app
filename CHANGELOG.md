@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Include target release version in Slack thread key so each upgrade gets its own thread instead of replying to a previous upgrade's thread.
+- Include target release version from Event annotation (`giantswarm.io/target-version`) in Slack thread key so each upgrade gets its own thread instead of replying to a previous upgrade's thread. Requires cluster-api-events v1.3.0+.
 
 ## [3.6.0] - 2026-01-28
 
