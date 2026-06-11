@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  architect: giantswarm/architect@9.1.0
+  architect: giantswarm/architect@9.3.1
 
 workflows:
   build:
@@ -11,6 +11,7 @@ workflows:
           context: architect
           executor: app-build-suite
           chart: event-exporter-app
+          override_app_version: false
           app_catalog: control-plane-catalog
           app_catalog_test: control-plane-test-catalog
           persist_chart_archive: true
